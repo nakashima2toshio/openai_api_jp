@@ -29,7 +29,7 @@
 
 ---
 
-## a10_01_structured_outputs_parse_schema.py
+## a01_structured_outputs_parse_schema.py
 
 **Structured Outputs 6パターン**
 
@@ -47,7 +47,7 @@
 
 ---
 
-## a10_02_responses_tools_pydantic_parse.py
+## a02_responses_tools_pydantic_parse.py
 
 **Pydantic Parse 高度デモ**
 
@@ -69,7 +69,7 @@
 
 ---
 
-## a10_03_images_and_vision.py
+## a03_images_and_vision.py
 
 **画像＆ビジョンAPI**
 
@@ -84,7 +84,7 @@
 
 ---
 
-## a10_04_audio_speeches.py
+## a04_audio_speeches.py
 
 **音声処理API統合**
 
@@ -101,7 +101,7 @@
 
 ---
 
-## a10_05_conversation_state.py
+## a05_conversation_state.py
 
 **会話状態管理**
 
@@ -116,7 +116,7 @@
 
 ---
 
-## a10_06_reasoning_chain_of_thought.py
+## a06_reasoning_chain_of_thought.py
 
 **Chain of Thought 5パターン**
 
@@ -132,7 +132,9 @@
 **主要API**: `responses.create`, 推論系モデル対応
 
 ---
+
 ### ヘルパー関数
+
 
 | ファイル名    | 概要                                                                                         | 利用API / 機能        |
 | ------------- | -------------------------------------------------------------------------------------------- | --------------------- |
@@ -140,23 +142,24 @@
 | helper_st.py  | Streamlit UI 用の共通部品（レイアウト/入力/表示まわりのヘルパー）。                          | **Streamlit**         |
 
 ---
+
 ## 学習の進め方
 
 ### 📚 初心者向け
 
-- **a10_00_responses_api.py** - 全機能を一通り体験
-- **a10_01_structured_outputs_parse_schema.py** - 構造化出力の基本
+- **a00_responses_api.py** - 全機能を一通り体験
+- **a01_structured_outputs_parse_schema.py** - 構造化出力の基本
 
 ### 🔧 中級者向け
 
-- **a10_02_responses_tools_pydantic_parse.py** - Pydantic活用
-- **a10_03_images_and_vision.py** - マルチモーダル処理
+- **a02_responses_tools_pydantic_parse.py** - Pydantic活用
+- **a03_images_and_vision.py** - マルチモーダル処理
 
 ### 🚀 上級者向け
 
-- **a10_04_audio_speeches.py** - 音声処理
-- **a10_05_conversation_state.py** - 状態管理
-- **a10_06_reasoning_chain_of_thought.py** - 推論パターン
+- **a04_audio_speeches.py** - 音声処理
+- **a05_conversation_state.py** - 状態管理
+- **a06_reasoning_chain_of_thought.py** - 推論パターン
 
 ---
 
@@ -164,25 +167,25 @@
 
 ```bash
 # メイン統合デモ
-streamlit run a10_00_responses_api.py --server.port=8501
+streamlit run a00_responses_api.py --server.port=8501
 
 # 構造化出力デモ
-streamlit run a10_01_structured_outputs_parse_schema.py --server.port=8501
+streamlit run a01_structured_outputs_parse_schema.py --server.port=8501
 
 # Tools・Pydantic Parse デモ
-streamlit run a10_02_responses_tools_pydantic_parse.py --server.port=8502
+streamlit run a02_responses_tools_pydantic_parse.py --server.port=8502
 
 # 画像・ビジョンデモ
-streamlit run a10_03_images_and_vision.py --server.port=8503
+streamlit run a03_images_and_vision.py --server.port=8503
 
 # 音声処理デモ
-streamlit run a10_04_audio_speeches.py --server.port=8504
+streamlit run a04_audio_speeches.py --server.port=8504
 
 # 会話状態管理デモ
-streamlit run a10_05_conversation_state.py --server.port=8505
+streamlit run a05_conversation_state.py --server.port=8505
 
 # Chain of Thought デモ
-streamlit run a10_06_reasoning_chain_of_thought.py --server.port=8506
+streamlit run a06_reasoning_chain_of_thought.py --server.port=8506
 ```
 
 ## 必要な環境変数
@@ -207,8 +210,6 @@ export EXCHANGERATE_API_KEY='your-exchangerate-api-key'
 - MCPの作成と利用例:         URL:[openai_mcp](https://github.com/nakashima2toshio/open_mcp)　　　   別リポジトリ
 - Agentの作成と利用例:       URL:[openai_agent_app](https://github.com/nakashima2toshio/open_agent_app)　別リポジトリ
 
-
-
 ### 画面構成
 
 ![image_a10_00.png](assets/image_a10_00.png)
@@ -216,7 +217,6 @@ export EXCHANGERATE_API_KEY='your-exchangerate-api-key'
 ##### API=IPOの例：　タブを開くとAPIのIPO(Input,Process,Outputを表示する。)
 
 ![image.png](assets/image_a10_01.png)
-
 
 ### セットアップ
 

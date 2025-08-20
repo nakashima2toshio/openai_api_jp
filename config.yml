@@ -1,7 +1,7 @@
 # config.yml（改修後）
 
 models:
-  default: "gpt-4.1"
+  default: "gpt-5-mini"
   available:
     - "gpt-4o"
     - "gpt-4o-mini"

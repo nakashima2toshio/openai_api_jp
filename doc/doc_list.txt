@@ -1,4 +1,6 @@
 Memo
+# どの環境でも安定
+python -m pip install -r requirements.txt
 
 [サンプルプログラム]
 a10_00_responses_api.py
