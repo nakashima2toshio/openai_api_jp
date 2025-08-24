@@ -627,7 +627,7 @@ def main():
     with st.sidebar:
         # 1. デモ選択
         demo_name = st.radio(
-            "デモを選択",
+            "[a05_conversation_state.py] デモを選択",
             demo_manager.get_demo_list(),
             key="demo_selection"
         )

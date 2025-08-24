@@ -900,7 +900,7 @@ class AudioDemoManager:
     def run(self):
         try:
             SessionStateManager.init_session_state()
-            demo_name = st.sidebar.radio("🎵 Audio Demo を選択", list(self.demos.keys()), key="audio_demo_selection")
+            demo_name = st.sidebar.radio("[a04_audio_speeches.py] Audio Demo", list(self.demos.keys()), key="audio_demo_selection")
 
             if "current_audio_demo" not in st.session_state:
                 st.session_state.current_audio_demo = demo_name

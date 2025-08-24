@@ -2,13 +2,12 @@
 
 ## 概要
 
-・OpenAI APIの学習用サンプルプログラム集の機能一覧です。
-・各プログラムは異なるAPIの側面と機能を実際に体験できるよう設計されており、
-　基本的な使用法から高度な応用まで段階的に学習できます。
+ - OpenAI APIの学習用サンプルプログラム集の機能一覧です。
+ - 各プログラムは異なるAPIの側面と機能を実際に体験できるよう設計されており、
+- 基本的な使用法から高度な応用まで段階的に学習できます。
+--------------------------------------------------------
 
----
-
-## a10_00_responses_api.py
+## a00_responses_api.py
 
 **OpenAI Responses API 統合デモ**
 
@@ -204,7 +203,6 @@ export EXCHANGERATE_API_KEY='your-exchangerate-api-key'
 ### その他のリポジトリ一覧：
 
 ・内容　　　　　　　　　　　　　　「リポジトリーURL」
-
 - OpenAI API - 基本・応用：　URL:[openai_api_app](https://github.com/nakashima2toshio/openai_api_app)　このプロジェクトサンプル：6本、API-41パターン
 - RAGの作成と検索：          URL:[openai_rag_app](https://github.com/nakashima2toshio/openai_rag_app)　  別リポジトリ
 - MCPの作成と利用例:         URL:[openai_mcp](https://github.com/nakashima2toshio/open_mcp)　　　   別リポジトリ
@@ -234,3 +232,12 @@ export OPENAI_API_KEY='your-api-key'
 # 4. 実行
 streamlit run a10_00_responses_api.py
 ```
+
+- ![a00_image.png](assets/a00_image.png)
+- ![a01_image.png](assets/a01_mage.png)
+
+- ![a02_image.png](assets/a02_image.png)
+- ![a03_image.png](assets/a03_image.png)
+- ![a04_image.png](assets/a04_image.png)
+- ![a05_image.png](assets/a05_image.png)
+- ![a06_image.png](assets/a06_image.png)

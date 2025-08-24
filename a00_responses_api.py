@@ -197,6 +197,7 @@ class BaseDemo(ABC):
         self.model = setup_common_ui(self.demo_name)
         setup_sidebar_panels(self.model)
 
+
     def handle_error(self, e: Exception):
         """統一的エラーハンドリング"""
         # 多言語対応エラーメッセージ
@@ -257,6 +258,7 @@ class TextResponseDemo(BaseDemo):
     def run(self):
         """デモの実行（統一化版）"""
         self.initialize()
+        st.write("サブアプリ：：TextResponseDemo")
         with st.expander("OpenAI API(IPO):実装例", expanded=False):
             st.write(
                 "responses.create()の基本的なテキスト応答デモ。デフォルトメッセージ+ユーザー入力でOne-Shot応答を実行。EasyInputMessageParamでメッセージ構築し、ResponseProcessorUIで結果表示。")
@@ -353,10 +355,13 @@ class MemoryResponseDemo(BaseDemo):
     def run(self):
         """デモの実行（改修版）"""
         self.initialize()
-        st.write(
-            "**連続会話デモ（改修版）**\n"
-            "responses.create()で連続した会話を実現。各ステップで「プロンプト + 回答」の履歴を保持し、"
-            "新しい質問を追加して連続実行します。会話の流れと各ステップが視覚的に確認できます。"
+        st.write("サブアプリ：MemoryResponseDemo")
+        st.code(
+            """
+            連続会話デモ
+            responses.create()で連続した会話を実現。各ステップで「プロンプト + 回答」の履歴を保持し、
+            新しい質問を追加して連続実行します。会話の流れと各ステップが視覚的に確認できます。
+            """
         )
 
         with st.expander("OpenAI API(IPO):実装例", expanded=False):
@@ -392,9 +397,9 @@ class MemoryResponseDemo(BaseDemo):
 
     def _display_conversation_history(self):
         """会話履歴の表示"""
-        if not self.conversation_steps:
-            st.info("💬 会話を開始してください。質問を入力すると会話履歴が表示されます。")
-            return
+        # if not self.conversation_steps:
+        #     st.info("💬 会話を開始してください。質問を入力すると会話履歴が表示されます。")
+        #     return
 
         st.subheader("📝 会話履歴")
 
@@ -836,6 +841,7 @@ class ImageResponseDemo(BaseDemo):
     def run(self):
         """デモの実行（統一化版）"""
         self.initialize()
+        st.write("サブアプリ：ImageResponseDemo")
         with st.expander("OpenAI API(IPO):実装例", expanded=False):
             st.write(
                 "マルチモーダル対応のresponses.create()デモ。URL・Base64形式の画像入力に対応。ResponseInputTextParamとResponseInputImageParamを組み合わせて画像解析を実行。GPT-4oの視覚機能活用例。")
@@ -1010,6 +1016,7 @@ class StructuredOutputDemo(BaseDemo):
     def run(self):
         """デモの実行（修正版・左ペインモデル選択統一）"""
         self.initialize()  # 左ペインにモデル選択が作成される
+        st.write("サブアプリ：StructuredOutputDemo")
         st.write(
             "構造化出力特化のresponses.create()/responses.parse()デモ。PydanticモデルとJSON Schemaによる型安全な出力抽出。"
             "イベント情報の構造化抽出例を通じて、データ処理アプリでのAPI活用を学習。"
@@ -1371,6 +1378,7 @@ class WeatherDemo(BaseDemo):
     def run(self):
         """デモの実行（改修版）"""
         self.initialize()
+        st.write("サブアプリ：WeatherDemo")
         st.header("構造化出力: 天気デモ")
         st.write(
             "外部API連携デモ（改修版）。都市選択後、「APIを実行」ボタンでOpenWeatherMap APIを呼び出し、"
@@ -1691,12 +1699,19 @@ class FileSearchVectorStoreDemo(BaseDemo):
     def run(self):
         """デモの実行（正しいAPI対応版）"""
         self.initialize()
+        st.write("サブアプリ：FileSearchVectorStoreDemo")
         st.header("FileSearchデモ")
-        st.write(
-            "（注）Vector Storeのデータは、英語なので、質問は英語の必要があります。"
-            "セレクタで選択可能。responses.create()でドキュメント検索を実行し、"
-            "Vector Store検索APIでの直接検索も可能。"
-        )
+        st.code("""
+        事前作成：ここでは、
+        リポジトリー：https://github.com/nakashima2toshio/openai_rag_jp　で、
+        OpenAIのVector Storeにvector_store_idを事前に作成済み。
+        """)
+        st.code("""
+          - OpenAIのembeddingモデルが多言語対応のため、日本語質問と英語データが同じベクトル空間で比較可能
+          - 例ば、日本語「返金は可能ですか？」と英語「Can I get a refund?」の類似度が0.4957と高い値を示している
+          - この多言語embedding機能により、翻訳なしで日英間の意味的検索が実現されている。
+          - 左ペインで、個別domainを選択すると質問・候補が表示されます。
+        """)
         with st.expander("利用：OpenWeatherMap API(比較用)", expanded=False):
             st.code("""
             # FileSearchツールパラメータの作成
@@ -2267,7 +2282,9 @@ class WebSearchToolsDemo(BaseDemo):
     def run(self):
         """デモの実行（統一化版）"""
         self.initialize()
+        st.write("サブアプリ：WebSearchToolsDemo")
         st.header("WebSearch Toolsデモ　API情報")
+        st.write("Structured Output + Websearch(API)のデモ")
         with st.expander("利用：WebSearch Toolsデモ", expanded=False):
             st.code("""
             user_location = UserLocation(
@@ -2284,7 +2301,7 @@ class WebSearchToolsDemo(BaseDemo):
             )
             
             default_query = config.get("samples.prompts.weather_query",
-                                   "週末の東京の新宿の天気とおすすめの屋内アクティビティは？")
+                                   "今週末の東京の新宿の天気とおすすめの屋内アクティビティは？")
             query = st.text_input("検索クエリ", value=default_query)
             
             response = self.call_api_unified(
@@ -2360,6 +2377,7 @@ class ComputerUseDemo(BaseDemo):
     def run(self):
         """デモの実行（統一化版）"""
         self.initialize()
+        st.write("サブアプリ：ComputerUseDemo")
         st.header("Computer Useデモ")
         st.write("利用：OpenAI API")
         st.warning("Computer Use APIは実験的な機能です。実行には特別な権限が必要です。")
@@ -2450,7 +2468,7 @@ class DemoManager:
             "Image to Text 画像入力(URL)"   : ImageResponseDemo("Image_URL", use_base64=False),
             "Image to Text 画像入力(base64)": ImageResponseDemo("Image_Base64", use_base64=True),
             "Structured Output 構造化出力" : StructuredOutputDemo("Structured_Output_create", use_parse=False),
-            "Open Weather API" : WeatherDemo("OpenWeatherAPI"),
+            "Open Weather API(比較用)" : WeatherDemo("OpenWeatherAPI"),
             "File Search-Tool vector store": FileSearchVectorStoreDemo("FileSearch_vsid"),
             "Tools - Web Search Tools"     : WebSearchToolsDemo("WebSearch"),
             "Computer Use Tool Param"      : ComputerUseDemo("Computer_Use"),
@@ -2465,7 +2483,7 @@ class DemoManager:
 
         # デモ選択
         demo_name = st.sidebar.radio(
-            "デモを選択",
+            "[a00_responses_api.py] デモを選択",
             list(self.demos.keys()),
             key="demo_selection"
         )

@@ -263,23 +263,24 @@ class BasicFunctionCallDemo(BaseDemo):
         self.setup_sidebar(model)
 
         st.markdown("#### 基本的な function call の構造化出力例")
-        st.code("""
-        class WeatherRequest(BaseModel):
-            city: str
-            date: str
-        
-        class NewsRequest(BaseModel):
-            topic: str
-            date: str
-
-        response = self.client.responses.parse(
-                    model=model,
-                    input=messages,
-                    tools=[
-                        pydantic_function_tool(WeatherRequest),
-                        pydantic_function_tool(NewsRequest)
-                    ]
-                )""")
+        with st.expander("OpenAI API:実装例"):
+            st.code("""
+            class WeatherRequest(BaseModel):
+                city: str
+                date: str
+            
+            class NewsRequest(BaseModel):
+                topic: str
+                date: str
+    
+            response = self.client.responses.parse(
+                        model=model,
+                        input=messages,
+                        tools=[
+                            pydantic_function_tool(WeatherRequest),
+                            pydantic_function_tool(NewsRequest)
+                        ]
+                    )""")
 
         example_query = "東京と大阪の明日の天気と、AIの最新ニュースを教えて"
         # st.write(f"質問例: {example_query}")
@@ -1159,7 +1160,7 @@ class DemoManager:
 
         # デモ選択
         demo_name = st.sidebar.radio(
-            "デモを選択",
+            "[a02_responses_tools_pydantic_parse.py] デモを選択",
             list(self.demos.keys()),
             key="demo_selection"
         )

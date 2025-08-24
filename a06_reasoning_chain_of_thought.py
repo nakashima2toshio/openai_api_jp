@@ -874,7 +874,7 @@ def main():
     with st.sidebar:
         # 1. デモ選択
         demo_name = st.radio(
-            "デモを選択",
+            "[a06_reasoning_chain_of_thought.py] デモ選択",
             demo_manager.get_demo_list(),
             key="demo_selection"
         )

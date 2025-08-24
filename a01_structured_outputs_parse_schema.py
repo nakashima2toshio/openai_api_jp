@@ -1037,7 +1037,7 @@ class DemoManager:
 
         # デモ選択
         demo_name = st.sidebar.radio(
-            "デモを選択",
+            "[a01_structured_outputs_parse_schema.py] デモを選択",
             list(self.demos.keys()),
             key="demo_selection"
         )

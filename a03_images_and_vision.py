@@ -158,8 +158,10 @@ class URLImageToTextDemo(BaseDemo):
         st.write("## 実装例: 画像URL解析")
         st.write("画像URLを入力して、その画像を解析します。")
         
-        # 実装例サンプル表示
-        with st.expander("📋 実装例コード", expanded=False):
+        # OpenAI API(responses.parse):実装例
+        with st.expander("OpenAI API(responses.parse):実装例", expanded=False):
+            st.write(
+                "responses.create()での画像解析実装。EasyInputMessageParamでテキスト+画像を組み合わせ、ResponseProcessorUIで結果を表示。")
             st.code("""
 # 画像URLからテキスト生成の実装例
 from openai import OpenAI
@@ -254,8 +256,10 @@ class Base64ImageToTextDemo(BaseDemo):
         st.write("## 実装例: ローカル画像解析（Base64）")
         st.write("ローカルの画像ファイルを選択して解析します。")
         
-        # 実装例サンプル表示
-        with st.expander("📋 実装例コード", expanded=False):
+        # OpenAI API(responses.parse):実装例
+        with st.expander("OpenAI API(responses.parse):実装例", expanded=False):
+            st.write(
+                "Base64画像の解析実装。画像ファイルをBase64エンコードしてResponseInputImageParamで送信、responses.create()で処理。")
             st.code("""
 # Base64画像からテキスト生成の実装例
 import base64
@@ -327,7 +331,7 @@ response = client.responses.create(model=model, input=messages)
         
         # 画像選択
         selected_image_file = st.selectbox(
-            "画像ファイルを選択してください",
+            "images/以下に画像を配置して、画像ファイルを選択してください",
             image_files,
             key=f"select_image_{self.safe_key}"
         )
@@ -412,8 +416,10 @@ class PromptToImageDemo(BaseDemo):
         st.write("## 実装例: DALL-E画像生成")
         st.write("テキストから画像を生成します（DALL-E 3使用）。")
         
-        # 実装例サンプル表示
-        with st.expander("📋 実装例コード", expanded=False):
+        # OpenAI API(responses.parse):実装例
+        with st.expander("OpenAI API(responses.parse):実装例", expanded=False):
+            st.write(
+                "DALL-E画像生成の実装。client.images.generate()でプロンプトから画像を生成、生成された画像URLを取得。")
             st.code("""
 # DALL-E画像生成の実装例
 from openai import OpenAI
@@ -545,7 +551,7 @@ def main():
     with st.sidebar:
         # 1. デモ選択
         demo_name = st.radio(
-            "デモを選択",
+            "[a03_images_and_vision.py] デモを選択",
             demo_manager.get_demo_list(),
             key="demo_selection"
         )
