@@ -1,4 +1,4 @@
-# 📋 a10_00_responses_api.py 設計書
+# 📋 a00_responses_api.py 設計書
 
 ## 📝 目次
 
@@ -32,6 +32,21 @@
 | 💻 **Computer Use** | AI自動操作デモ |
 | 🧠 **推論モデル** | o1/o3/o4シリーズ対応 |
 | ⚙️ **統一設定** | モデル横断的な設定管理 |
+
+### 📋 サブプログラムの一覧表
+
+| プログラム名 | クラス・関数名 | 処理概要 |
+|-------------|-------------|----------|
+| a00_responses_api.py | BaseDemo | デモ機能の基底クラス（統一化版） |
+| | TextResponseDemo | 基本テキスト応答 |
+| | MemoryResponseDemo | 会話履歴付き応答 |
+| | ImageResponseDemo | 画像入力（URL・Base64対応） |
+| | StructuredOutputDemo | 構造化出力（create・parse対応） |
+| | WeatherDemo | OpenWeatherMap API連携 |
+| | FileSearchVectorStoreDemo | FileSearch専用 |
+| | WebSearchToolsDemo | WebSearch専用 |
+| | ComputerUseDemo | Computer Use Tool |
+| | DemoManager | デモ統合管理・実行制御 |
 
 #### 🎨 処理対象データ
 
@@ -549,7 +564,7 @@ graph TD
 
 ## 🎉 まとめ
 
-この設計書は、**a10_00_responses_api.py** の包括的な技術仕様と実装詳細を網羅した完全ドキュメントです。
+この設計書は、**a00_responses_api.py** の包括的な技術仕様と実装詳細を網羅した完全ドキュメントです。
 
 ### 🌟 設計のハイライト
 

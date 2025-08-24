@@ -31,6 +31,17 @@
 | 📊 **レスポンス処理** | フォーマット表示・コピー機能・ダウンロード |
 | ℹ️ **情報パネル** | サイドバー情報・パフォーマンス・コスト計算 |
 
+### 📋 サブプログラムの一覧表
+
+| プログラム名 | クラス・関数名 | 処理概要 |
+|-------------|-------------|----------|
+| helper_st.py | SessionStateManager | Streamlit セッション状態の管理 |
+| | MessageManagerUI | メッセージ履歴の管理（Streamlit UI用） |
+| | UIHelper | Streamlit UI用のヘルパー関数（拡張版） |
+| | ResponseProcessorUI | API レスポンスの処理（UI拡張） |
+| | DemoBase | デモの基底クラス |
+| | InfoPanelManager | 左ペインの情報パネル管理 |
+
 #### 🎨 処理対象データ
 
 ```mermaid

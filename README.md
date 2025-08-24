@@ -1,15 +1,47 @@
-# OpenAI API サンプルプログラム一覧
+### 本概要署m、OpenAI API サンプルプログラム一覧
 
-## 概要
+### 概要
 
- - OpenAI APIの学習用サンプルプログラム集の機能一覧です。
- - 各プログラムは異なるAPIの側面と機能を実際に体験できるよう設計されており、
+- OpenAI APIの学習用サンプルプログラム集の機能一覧です。
+- 各プログラムは異なるAPIの側面と機能を実際に体験できるよう設計されており、
 - 基本的な使用法から高度な応用まで段階的に学習できます。
---------------------------------------------------------
 
-## a00_responses_api.py
+#### 環境のセットアップ
+[環境セットアップ](https://./README_setup.md)
 
-**OpenAI Responses API 統合デモ**
+#### ドキュメント、設計書：
+[ドキュメント] ./doc/ 以下のディレクトリ、プログラムと同名のファイル.md
+---
+
+## a00_responses_api.py 画面
+
+![a00_image.png](assets/a00_image.png)
+
+### a01_structured_outputs_parse_schema.py　画面
+
+![a01_image.png](assets/a01_image.png)
+
+### a02_responses_tools_pydantic_parse.py　画面
+
+![a02_image.png](assets/a02_image.png)
+
+### a03_images_and_vision.py　画面
+
+![a03_image.png](assets/a03_image.png)
+
+### a04_audio_speeches.py　画面
+
+![a04_image.png](assets/a04_image.png)
+
+### a05_conversation_state.py　画面
+
+![a05_image.png](assets/a05_image.png)
+
+### a06_reasoning_chain_of_thought.py　画面
+
+![a06_image.png](assets/a06_image.png)
+
+### **OpenAI Responses API 統合デモ**
 
 
 | 機能名                    | 概要                                                                                |
@@ -162,7 +194,7 @@
 
 ---
 
-## 実行方法
+## 実行方法　 : （注）ポート番号は適切に調整してください。
 
 ```bash
 # メイン統合デモ
@@ -203,18 +235,21 @@ export EXCHANGERATE_API_KEY='your-exchangerate-api-key'
 ### その他のリポジトリ一覧：
 
 ・内容　　　　　　　　　　　　　　「リポジトリーURL」
-- OpenAI API - 基本・応用：　URL:[openai_api_app](https://github.com/nakashima2toshio/openai_api_app)　このプロジェクトサンプル：6本、API-41パターン
-- RAGの作成と検索：          URL:[openai_rag_app](https://github.com/nakashima2toshio/openai_rag_app)　  別リポジトリ
-- MCPの作成と利用例:         URL:[openai_mcp](https://github.com/nakashima2toshio/open_mcp)　　　   別リポジトリ
-- Agentの作成と利用例:       URL:[openai_agent_app](https://github.com/nakashima2toshio/open_agent_app)　別リポジトリ
+
+- OpenAI API - 基本・応用：　URL:[openai_api_jp](https://github.com/nakashima2toshio/openai_api_jp)　このプロジェクトサンプル：6本、API-41パターン
+- RAGの作成と検索：          URL:[openai_rag_jp](https://github.com/nakashima2toshio/openai_rag_jp)　  別リポジトリ（整備中）
+- MCPの作成と利用例:         URL:[openai_mcp_jp](https://github.com/nakashima2toshio/openai_mcp_jp)　　別リポジトリ（整備中）
+- Agentの作成と利用例:       URL:[openai_agent_jp](https://github.com/nakashima2toshio/openai_agent_jp)　別リポジトリ（作成中）
 
 ### 画面構成
 
-![image_a10_00.png](assets/image_a10_00.png)
+![image.png](assets/a00_image.png)
 
-##### API=IPOの例：　タブを開くとAPIのIPO(Input,Process,Outputを表示する。)
+### OpenAI API：利用例
 
-![image.png](assets/image_a10_01.png)
+#### 左ペイン
+
+![image.png](assets/l_painimage.png)
 
 ### セットアップ
 
@@ -232,12 +267,3 @@ export OPENAI_API_KEY='your-api-key'
 # 4. 実行
 streamlit run a10_00_responses_api.py
 ```
-
-- ![a00_image.png](assets/a00_image.png)
-- ![a01_image.png](assets/a01_mage.png)
-
-- ![a02_image.png](assets/a02_image.png)
-- ![a03_image.png](assets/a03_image.png)
-- ![a04_image.png](assets/a04_image.png)
-- ![a05_image.png](assets/a05_image.png)
-- ![a06_image.png](assets/a06_image.png)

@@ -19,27 +19,37 @@ helper_st.py
 a10_get_vsid.py
 et_cities_list.py
 
-
-
-a10_00_responses_api.py
-
-TextResponseDemo - 基本テキスト応答
-MemoryResponseDemo - 会話履歴付き応答
-ImageResponseDemo - 画像入力（URL・Base64対応）
-StructuredOutputDemo - 構造化出力（create・parse対応）
-WeatherDemo - OpenWeatherMap API連携
-ToolsDemo - FileSearch・WebSearch統合
-FileSearchStandaloneDemo - FileSearch専用
-WebSearchStandaloneDemo - WebSearch専用
-ComputerUseDemo - Computer Use Tool
-ConversationStateDemo - 会話状態管理
+a00_responses_api.py
+    TextResponseDemo - 基本テキスト応答
+    MemoryResponseDemo - 会話履歴付き応答
+    ImageResponseDemo - 画像入力（URL・Base64対応）
+    StructuredOutputDemo - 構造化出力（create・parse対応）
+    WeatherDemo - OpenWeatherMap API連携
+    ToolsDemo - FileSearch・WebSearch統合
+    FileSearchStandaloneDemo - FileSearch専用
+    WebSearchStandaloneDemo - WebSearch専用
+    ComputerUseDemo - Computer Use Tool
+    ConversationStateDemo - 会話状態管理
 
 city.list.json.gz
 https://bulk.openweathermap.org/sample/
 
-# ----------------------------------------------
+###  ----------------------------------------------
+### 設計書：作成用のプロンプト
+### ----------------------------------------------
+下記仕様で以下の設計書を更新せよ。
+（コードは、設計書と同名.pyのプログラムである）
+doc/a00_responses_api.md
+doc/a01_structured_outputs_parse_schema.md
+doc/a02_responses_tools_pydantic_parse.md
+doc/a03_images_and_vision.md
+doc/a04_audio_speeches.md
+oc/a05_conversation_state.md
+doc/a06_reasoning_chain_of_thought.md
+doc/helper_api.md
+doc/helper_st.md
 
-下記仕様で設計書を作成せよ。
+基本構造は、そのままで、
 不足情報があれば、指摘せよ。
 
 仕様書：
@@ -47,6 +57,20 @@ https://bulk.openweathermap.org/sample/
 
 概要書
 ・処理の概要
+・サブプログラムの一覧表：
+　（下記が例だが、表で提供して欲しい：）
+a00_responses_api.py
+    TextResponseDemo - 基本テキスト応答
+    MemoryResponseDemo - 会話履歴付き応答
+    ImageResponseDemo - 画像入力（URL・Base64対応）
+    StructuredOutputDemo - 構造化出力（create・parse対応）
+    WeatherDemo - OpenWeatherMap API連携
+    ToolsDemo - FileSearch・WebSearch統合
+    FileSearchStandaloneDemo - FileSearch専用
+    WebSearchStandaloneDemo - WebSearch専用
+    ComputerUseDemo - Computer Use Tool
+    ConversationStateDemo - 会話状態管理
+
 ・mainの処理の流れ
 
 クラス、関数・一覧

@@ -1,4 +1,4 @@
-# 📋 a10_05_conversation_state.py 設計書
+# 📋 a05_conversation_state.py 設計書
 
 ## 📝 目次
 
@@ -29,6 +29,16 @@
 | 📊 **構造化パース** | 非構造化応答の型安全な構造化処理 |
 | 🔄 **セッション管理** | 会話履歴の永続化・状態追跡 |
 | ⚙️ **モデル最適化** | 推論モデル・標準モデルの自動最適化 |
+
+### 📋 サブプログラムの一覧表
+
+| プログラム名 | クラス・関数名 | 処理概要 |
+|-------------|-------------|----------|
+| a05_conversation_state.py | BaseDemo | ベースデモクラス（統一化版） |
+| | StatefulConversationDemo | ステートフルな会話継続デモ |
+| | WebSearchParseDemo | Web検索と構造化パースデモ |
+| | FunctionCallingDemo | Function Callingデモ |
+| | DemoManager | デモ管理クラス（統一化版） |
 
 #### 🎨 処理対象データ
 

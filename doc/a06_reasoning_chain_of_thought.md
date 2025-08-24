@@ -1,4 +1,4 @@
-# 📋 a10_06_reasoning_chain_of_thought.py 設計書
+# 📋 a06_reasoning_chain_of_thought.py 設計書
 
 ## 📝 目次
 
@@ -29,6 +29,18 @@
 | ⚖️ **Pros-Cons-Decision** | 賛否比較型：メリデメ分析による合理的決定 |
 | 🔄 **Plan-Execute-Reflect** | 反復改良型：計画→実行→振り返りの継続改善 |
 | 🤖 **推論モデル最適化** | o1/o3/o4シリーズの自動検出・パラメータ最適化 |
+
+### 📋 サブプログラムの一覧表
+
+| プログラム名 | クラス・関数名 | 処理概要 |
+|-------------|-------------|----------|
+| a06_reasoning_chain_of_thought.py | BaseDemo | ベースデモクラス（統一化版） |
+| | StepByStepReasoningDemo | 段階的推論（Step-by-Step）デモ |
+| | HypothesisTestDemo | 仮説検証推論デモ |
+| | TreeOfThoughtDemo | 思考の木（Tree of Thought）デモ |
+| | ProsConsDecisionDemo | 賛否比較決定（Pros-Cons-Decision）デモ |
+| | PlanExecuteReflectDemo | 計画実行振り返り（Plan-Execute-Reflect）デモ |
+| | DemoManager | デモ管理クラス（統一化版） |
 
 #### 🎨 処理対象データ
 

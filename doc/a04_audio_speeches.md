@@ -1,4 +1,4 @@
-# 📋 a10_04_audio_speeches.py 設計書
+# 📋 a04_audio_speeches.py 設計書
 
 ## 📝 目次
 
@@ -30,6 +30,18 @@
 | 🤖 **Chained Voice Agent** | 音声→テキスト→Chat→音声の連鎖処理 |
 | 📁 **ファイル管理** | 音声・テキストファイルの統合管理 |
 | 💰 **コスト計算** | リアルタイムコスト推定・使用量追跡 |
+
+### 📋 サブプログラムの一覧表
+
+| プログラム名 | クラス・関数名 | 処理概要 |
+|-------------|-------------|----------|
+| a04_audio_speeches.py | BaseDemo | デモ機能の基底クラス（音声用統一化版） |
+| | TextToSpeechDemo | Text to Speech API のデモ |
+| | SpeechToTextDemo | Speech to Text API のデモ |
+| | SpeechTranslationDemo | Speech Translation API のデモ |
+| | RealtimeApiDemo | Realtime API のデモ |
+| | ChainedVoiceAgentDemo | Chained Voice Agent のデモ |
+| | AudioDemoManager | 音声デモの管理クラス（統一化版） |
 
 #### 🎨 処理対象データ
 

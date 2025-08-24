@@ -282,15 +282,18 @@ class TextToSpeechDemo(BaseDemo):
 
         with st.expander("OpenAI Audio API:実装例", expanded=False):
             st.write("テキストを音声に変換するTTSデモ。ストリーミング保存でMP3出力。")
-            st.code(textwrap.dedent("""\
-        # Text to Speech API 使用例
-        with client.audio.speech.with_streaming_response.create(
-            model=model, voice=voice, input=text
-        ) as response:
-            response.stream_to_file(output_path)
-        # 保存したMP3を再生
-        st.audio(str(output_path), format="audio/mp3")
-            """), language="python")
+            # noinspection SqlDialectInspection,SqlNoDataSourceInspection
+            # ここで出るエラーはpycharmがSQL文と認識するバグ：このままでOK
+            code_text = textwrap.dedent("""\
+                # Text to Speech API 使用例
+                with client.audio.speech.with_streaming_response.create(
+                    model=model, voice=voice, input=text
+                ) as response:
+                    response.stream_to_file(output_path)
+                # 保存したMP3を再生
+                st.audio(str(output_path), format="audio/mp3")
+                    """)
+            st.code(code_text, language="python")
 
         col1, col2 = st.columns([2, 1])
         with col1:

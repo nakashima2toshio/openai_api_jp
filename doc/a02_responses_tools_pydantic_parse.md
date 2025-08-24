@@ -1,4 +1,4 @@
-# 📋 a10_02_responses_tools_pydantic_parse.py 設計書
+# 📋 a02_responses_tools_pydantic_parse.py 設計書
 
 ## 📝 目次
 
@@ -33,6 +33,25 @@
 | 🧠 **思考の連鎖(CoT)** | Chain of Thought推論プロセス実装 |
 | 💬 **会話履歴** | 連続対話でのコンテキスト保持管理 |
 | ⚙️ **設定統合** | 複数設定パターンの統一管理 |
+
+### 📋 サブプログラムの一覧表
+
+| プログラム名 | クラス・関数名 | 処理概要 |
+|-------------|-------------|----------|
+| a02_responses_tools_pydantic_parse.py | BaseDemo | デモ機能の基底クラス |
+| | BasicFunctionCallDemo | 基本的なfunction callのデモ |
+| | MultipleToolsDemo | 複数ツールの登録・複数関数呼び出しデモ |
+| | AdvancedMultipleToolsDemo | 高度な複数ツール呼び出しデモ |
+| | NestedStructureDemo | 入れ子構造のデモ |
+| | EnumTypeDemo | Enum型のデモ |
+| | NaturalTextStructuredOutputDemo | 自然文での構造化出力デモ |
+| | SimpleDataExtractionDemo | シンプルなデータ抽出デモ |
+| | MultipleEntityExtractionDemo | 複数エンティティ抽出デモ |
+| | ComplexQueryDemo | 複雑なクエリパターンデモ |
+| | DynamicEnumDemo | 動的な列挙型デモ |
+| | ChainOfThoughtDemo | 思考の連鎖デモ |
+| | ConversationHistoryDemo | 会話履歴デモ |
+| | DemoManager | デモの管理クラス |
 
 #### 🎨 処理対象データ
 

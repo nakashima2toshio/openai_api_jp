@@ -749,21 +749,21 @@ class SimpleDataExtractionDemo(BaseDemo):
         self.initialize()
         model = self.select_model()
         self.setup_sidebar(model)
-
-        st.code("""
-    class PersonInfo(BaseModel):
-        name: str
-        age: int
-
-    messages = self.get_default_messages()
-    messages.append(EasyInputMessageParam(role="user", content=user_input))
+        with st.expander("OpenAI API異用例：", expanded=False):
+            st.code("""
+        class PersonInfo(BaseModel):
+            name: str
+            age: int
     
-    response = self.client.responses.parse(
-        model=model,
-        input=messages,
-        text_format=PersonInfo
-    )
-        """)
+        messages = self.get_default_messages()
+        messages.append(EasyInputMessageParam(role="user", content=user_input))
+        
+        response = self.client.responses.parse(
+            model=model,
+            input=messages,
+            text_format=PersonInfo
+        )
+            """)
         st.write("### シンプルな構造化データ抽出")
         st.write("人物情報を抽出します")
 

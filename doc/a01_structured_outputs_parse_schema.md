@@ -1,4 +1,4 @@
-# 📋 a10_01_structured_outputs_parse_schema.py 設計書
+# 📋 a01_structured_outputs_parse_schema.py 設計書
 
 ## 📝 目次
 
@@ -29,6 +29,19 @@
 | 🏷️ **エンティティ抽出** | テキストから複数種類のエンティティを同時抽出 |
 | 🔄 **条件分岐スキーマ** | Union型による柔軟なスキーマ適用 |
 | 🛡️ **モデレーション拒否** | コンテンツ審査と拒否理由の構造化 |
+
+### 📋 サブプログラムの一覧表
+
+| プログラム名 | クラス・関数名 | 処理概要 |
+|-------------|-------------|----------|
+| a01_structured_outputs_parse_schema.py | BaseDemo | デモ機能の基底クラス（統一化版） |
+| | EventExtractionDemo | イベント情報抽出デモ |
+| | MathReasoningDemo | 数学的思考ステップデモ |
+| | UIGenerationDemo | UIコンポーネント生成デモ |
+| | EntityExtractionDemo | エンティティ抽出デモ |
+| | ConditionalSchemaDemo | 条件分岐スキーマデモ |
+| | ModerationDemo | モデレーション＆拒否処理デモ |
+| | DemoManager | デモの管理クラス（統一化版） |
 
 #### 🎨 処理対象データ
 
@@ -498,7 +511,7 @@ st.code("# 正しいスキーマ例\nclass Example(BaseModel):\n    field: str =
 
 ## 🎉 まとめ
 
-この設計書は、**a10_01_structured_outputs_parse_schema.py** の包括的な技術仕様と実装詳細を網羅した完全ドキュメントです。
+この設計書は、**a01_structured_outputs_parse_schema.py** の包括的な技術仕様と実装詳細を網羅した完全ドキュメントです。
 
 ### 🌟 設計のハイライト
 

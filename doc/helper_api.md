@@ -31,6 +31,17 @@
 | 🤖 **OpenAIクライアント** | API呼び出しラッパー・エラー処理統合 |
 | 📊 **ログ統合** | 構造化ログ・ローテーション・デバッグ支援 |
 
+### 📋 サブプログラムの一覧表
+
+| プログラム名 | クラス・関数名 | 処理概要 |
+|-------------|-------------|----------|
+| helper_api.py | ConfigManager | 設定ファイルの管理 |
+| | MemoryCache | メモリベースキャッシュ |
+| | MessageManager | メッセージ履歴の管理（API用） |
+| | TokenManager | トークン数の管理（新モデル対応） |
+| | ResponseProcessor | API レスポンスの処理 |
+| | OpenAIClient | OpenAI API クライアント |
+
 #### 🎨 処理対象データ
 
 ```mermaid
