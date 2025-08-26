@@ -7,15 +7,17 @@
 - 基本的な使用法から高度な応用まで段階的に学習できます。
 
 #### 環境のセットアップ
+
 [環境セットアップ](https://./README_setup.md)
 
 #### ドキュメント、設計書：
+
 [ドキュメント] ./doc/ 以下のディレクトリ、プログラムと同名のファイル.md
----
+-----------------------------------------------------------------------
 
 ## a00_responses_api.py 画面
 
-![a00_image.png](assets/a00_image.png)
+![image.png](assets/a00_image.png?t=1756205198890)
 
 ### a01_structured_outputs_parse_schema.py　画面
 
@@ -54,7 +56,6 @@
 | Open Weather API          | 外部API連携デモ。OpenWeatherMap APIを使用したリアルタイム天気情報取得               |
 | File Search-Tool          | Vector Store検索デモ。ファイル検索ツールによるRAG（検索拡張生成）実装               |
 | Web Search Tools          | Web検索ツール専用デモ。地域設定対応のリアルタイムWeb検索機能                        |
-| Computer Use Tool         | Computer Use APIデモ。AI によるコンピューター操作の自動化（実験的機能）             |
 
 **主要API**: `responses.create`, Vector Stores API, OpenWeatherMap API, Web Search Tool, Computer Use Tool
 
@@ -249,7 +250,7 @@ export EXCHANGERATE_API_KEY='your-exchangerate-api-key'
 
 #### 左ペイン
 
-![image.png](assets/l_painimage.png)
+![l_image.png](assets/l_painimage.png)
 
 ### セットアップ
 

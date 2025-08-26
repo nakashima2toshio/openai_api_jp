@@ -2371,84 +2371,7 @@ class WebSearchToolsDemo(BaseDemo):
 # ==================================================
 class ComputerUseDemo(BaseDemo):
     """Computer Use Tool のデモ（統一化版）"""
-
-    @error_handler_ui
-    @timer_ui
-    def run(self):
-        """デモの実行（統一化版）"""
-        self.initialize()
-        st.write("サブアプリ：ComputerUseDemo")
-        st.header("Computer Useデモ")
-        st.write("利用：OpenAI API")
-        st.warning("Computer Use APIは実験的な機能です。実行には特別な権限が必要です。")
-
-        model = "computer-use-preview"
-        st.write("使用モデル:", model)
-
-        instruction = st.text_area(
-            "実行指示",
-            value="ブラウザで https://news.ycombinator.com を開いて、"
-                  "トップ記事のタイトルをコピーしてメモ帳に貼り付けて",
-            height=100
-        )
-
-        # Literal型の制約に対応
-        environment: Literal["browser", "mac", "windows", "ubuntu", "linux"] = st.selectbox(
-            "実行環境",
-            ["browser", "mac", "windows", "ubuntu"],
-            key=f"cu_env_{self.safe_key}"
-        )
-
-        if st.button("Computer Use実行", key=f"cu_exec_{self.safe_key}"):
-            self._execute_computer_use(model, instruction, environment)
-
-    def _execute_computer_use(self, model: str, instruction: str,
-                              environment: Literal["windows", "mac", "linux", "ubuntu", "browser"]):
-        """Computer Useの実行（統一化版）"""
-        try:
-            cu_tool = ComputerToolParam(
-                type="computer_use_preview",
-                display_width=1280,
-                display_height=800,
-                environment=environment,
-            )
-
-            messages = [
-                EasyInputMessageParam(
-                    role="user",
-                    content=[
-                        ResponseInputTextParam(
-                            type="input_text",
-                            text=instruction
-                        )
-                    ]
-                )
-            ]
-
-            with st.spinner("実行中..."):
-                response = self.call_api_unified(
-                    messages=messages,
-                    model=model,
-                    tools=[cu_tool],
-                    truncation="auto",
-                    stream=False,
-                    include=["computer_call_output.output.image_url"]
-                )
-
-            st.subheader("実行結果")
-            ResponseProcessorUI.display_response(response)
-
-            # Computer Use特有の出力処理
-            for output in response.output:
-                if hasattr(output, 'type') and output.type == 'computer_call':
-                    st.subheader("Computer Use アクション")
-                    if hasattr(output, 'action'):
-                        st.write('実行アクション:', output.action)
-                    if hasattr(output, 'image_url'):
-                        st.image(output.image_url, caption="スクリーンショット")
-
-        except Exception as e:
-            self.handle_error(e)
+    pass
 
 # ==================================================
 # デモマネージャー
@@ -2471,7 +2394,7 @@ class DemoManager:
             "Open Weather API(比較用)" : WeatherDemo("OpenWeatherAPI"),
             "File Search-Tool vector store": FileSearchVectorStoreDemo("FileSearch_vsid"),
             "Tools - Web Search Tools"     : WebSearchToolsDemo("WebSearch"),
-            "Computer Use Tool Param"      : ComputerUseDemo("Computer_Use"),
+            # "Computer Use Tool Param"      : ComputerUseDemo("Computer_Use"),
         }
 
     @error_handler_ui

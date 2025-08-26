@@ -11,25 +11,28 @@ This is an educational Python application for learning OpenAI API capabilities t
 ### Running Individual Demos
 ```bash
 # Main integrated demo (port 8501)
-streamlit run a10_00_responses_api.py --server.port=8501
+streamlit run a00_responses_api.py --server.port=8501
 
 # Structured outputs demo  
-streamlit run a10_01_structured_outputs_parse_schema.py --server.port=8501
+streamlit run a01_structured_outputs_parse_schema.py --server.port=8501
 
 # Tools and Pydantic parsing (port 8502)
-streamlit run a10_02_responses_tools_pydantic_parse.py --server.port=8502
+streamlit run a02_responses_tools_pydantic_parse.py --server.port=8502
 
 # Images and vision (port 8503)
-streamlit run a10_03_images_and_vision.py --server.port=8503
+streamlit run a03_images_and_vision.py --server.port=8503
 
 # Audio processing (port 8504)
-streamlit run a10_04_audio_speeches.py --server.port=8504
+streamlit run a04_audio_speeches.py --server.port=8504
 
 # Conversation state management (port 8505)
-streamlit run a10_05_conversation_state.py --server.port=8505
+streamlit run a05_conversation_state.py --server.port=8505
 
 # Chain of thought reasoning (port 8506)
-streamlit run a10_06_reasoning_chain_of_thought.py --server.port=8506
+streamlit run a06_reasoning_chain_of_thought.py --server.port=8506
+
+# Vector Store ID utility
+python a10_get_vsid.py
 ```
 
 ### Testing
@@ -63,13 +66,17 @@ export EXCHANGERATE_API_KEY='your-exchangerate-api-key'
 ## Architecture
 
 ### Core Entry Points
-- **a10_00_responses_api.py** - Main integrated demo showcasing all OpenAI features
-- **a10_01_structured_outputs_parse_schema.py** - Structured outputs with schema validation 
-- **a10_02_responses_tools_pydantic_parse.py** - Pydantic-based parsing and function calling
-- **a10_03_images_and_vision.py** - Image generation and vision API demonstrations
-- **a10_04_audio_speeches.py** - Text-to-speech, transcription, and realtime audio
-- **a10_05_conversation_state.py** - Conversation state management using `previous_response_id`
-- **a10_06_reasoning_chain_of_thought.py** - Chain-of-thought reasoning patterns
+- **a00_responses_api.py** - Main integrated demo showcasing all OpenAI features
+- **a01_structured_outputs_parse_schema.py** - Structured outputs with schema validation 
+- **a02_responses_tools_pydantic_parse.py** - Pydantic-based parsing and function calling
+- **a03_images_and_vision.py** - Image generation and vision API demonstrations
+- **a04_audio_speeches.py** - Text-to-speech, transcription, and realtime audio
+- **a05_conversation_state.py** - Conversation state management using `previous_response_id`
+- **a06_reasoning_chain_of_thought.py** - Chain-of-thought reasoning patterns
+
+### Utility Scripts
+- **a10_get_vsid.py** - Vector Store ID management utility
+- **get_cities_list.py** - City list data processing for weather APIs
 
 ### Helper Modules
 
@@ -100,6 +107,8 @@ export EXCHANGERATE_API_KEY='your-exchangerate-api-key'
 - Real-time audio processing
 - Multi-modal input handling (text, images, audio)
 - Chain-of-thought reasoning patterns
+- External API integrations (OpenWeatherMap, Exchange Rate API)
+- Vector Store management utilities
 
 ## Development Notes
 
@@ -110,3 +119,24 @@ export EXCHANGERATE_API_KEY='your-exchangerate-api-key'
 - Each demo runs on different ports for parallel testing
 - Includes sample data files in `/data` and `/images` directories
 - Test configuration supports multiple test types with custom markers
+- Utility scripts in `/utils` directory for various helper functions
+- Comprehensive documentation in `/doc` directory with detailed markdown files
+- Assets directory contains UI screenshots and sample images
+
+## Project Structure
+
+```
+├── a00_responses_api.py           # Main integrated demo
+├── a01-a06_*.py                   # Individual feature demos
+├── a10_get_vsid.py                # Vector Store utility
+├── helper_api.py                  # Core API functionality
+├── helper_st.py                   # Streamlit UI helpers
+├── config.yml                     # Central configuration
+├── requirements.txt               # Python dependencies
+├── pytest.ini                     # Test configuration
+├── data/                          # Sample data files
+├── images/                        # Sample images
+├── assets/                        # UI assets and screenshots
+├── doc/                           # Documentation
+└── utils/                         # Utility scripts
+```

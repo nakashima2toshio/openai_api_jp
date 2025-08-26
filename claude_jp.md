@@ -11,25 +11,28 @@
 ### 各デモの実行
 ```bash
 # メイン統合デモ（ポート8501）
-streamlit run a10_00_responses_api.py --server.port=8501
+streamlit run a00_responses_api.py --server.port=8501
 
 # 構造化出力デモ
-streamlit run a10_01_structured_outputs_parse_schema.py --server.port=8501
+streamlit run a01_structured_outputs_parse_schema.py --server.port=8501
 
 # ツール・Pydantic解析（ポート8502）
-streamlit run a10_02_responses_tools_pydantic_parse.py --server.port=8502
+streamlit run a02_responses_tools_pydantic_parse.py --server.port=8502
 
 # 画像・ビジョン（ポート8503）
-streamlit run a10_03_images_and_vision.py --server.port=8503
+streamlit run a03_images_and_vision.py --server.port=8503
 
 # 音声処理（ポート8504）
-streamlit run a10_04_audio_speeches.py --server.port=8504
+streamlit run a04_audio_speeches.py --server.port=8504
 
 # 会話状態管理（ポート8505）
-streamlit run a10_05_conversation_state.py --server.port=8505
+streamlit run a05_conversation_state.py --server.port=8505
 
 # 思考連鎖推論（ポート8506）
-streamlit run a10_06_reasoning_chain_of_thought.py --server.port=8506
+streamlit run a06_reasoning_chain_of_thought.py --server.port=8506
+
+# Vector Store ID管理ユーティリティ
+python a10_get_vsid.py
 ```
 
 ### テスト実行
@@ -63,13 +66,17 @@ export EXCHANGERATE_API_KEY='your-exchangerate-api-key'
 ## アーキテクチャ
 
 ### 主要エントリーポイント
-- **a10_00_responses_api.py** - 全OpenAI機能を統合したメインデモ
-- **a10_01_structured_outputs_parse_schema.py** - スキーマ検証付き構造化出力
-- **a10_02_responses_tools_pydantic_parse.py** - Pydanticベースの解析と関数呼び出し
-- **a10_03_images_and_vision.py** - 画像生成とビジョンAPIのデモンストレーション
-- **a10_04_audio_speeches.py** - テキスト読み上げ、転写、リアルタイム音声
-- **a10_05_conversation_state.py** - `previous_response_id`を使った会話状態管理
-- **a10_06_reasoning_chain_of_thought.py** - 思考連鎖推論パターン
+- **a00_responses_api.py** - 全OpenAI機能を統合したメインデモ
+- **a01_structured_outputs_parse_schema.py** - スキーマ検証付き構造化出力
+- **a02_responses_tools_pydantic_parse.py** - Pydanticベースの解析と関数呼び出し
+- **a03_images_and_vision.py** - 画像生成とビジョンAPIのデモンストレーション
+- **a04_audio_speeches.py** - テキスト読み上げ、転写、リアルタイム音声
+- **a05_conversation_state.py** - `previous_response_id`を使った会話状態管理
+- **a06_reasoning_chain_of_thought.py** - 思考連鎖推論パターン
+
+### ユーティリティスクリプト
+- **a10_get_vsid.py** - Vector Store ID管理ユーティリティ
+- **get_cities_list.py** - 天気APIのための都市リストデータ処理
 
 ### ヘルパーモジュール
 
@@ -100,6 +107,8 @@ export EXCHANGERATE_API_KEY='your-exchangerate-api-key'
 - リアルタイム音声処理
 - マルチモーダル入力処理（テキスト、画像、音声）
 - 思考連鎖推論パターン
+- 外部API統合（OpenWeatherMap、Exchange Rate API）
+- Vector Store管理ユーティリティ
 
 ## 開発上の注意事項
 
@@ -110,3 +119,24 @@ export EXCHANGERATE_API_KEY='your-exchangerate-api-key'
 - 並行テスト用に各デモが異なるポートで動作
 - `/data`と`/images`ディレクトリにサンプルデータファイルを含む
 - カスタムマーカーによる複数テストタイプをサポートするテスト設定
+- `/utils`ディレクトリに各種ヘルパー機能
+- `/doc`ディレクトリに詳細なmarkdownドキュメント
+- `/assets`ディレクトリにUIスクリーンショットとサンプル画像
+
+## プロジェクト構造
+
+```
+├── a00_responses_api.py           # メイン統合デモ
+├── a01-a06_*.py                   # 個別機能デモ
+├── a10_get_vsid.py                # Vector Storeユーティリティ
+├── helper_api.py                  # 中核API機能
+├── helper_st.py                   # Streamlit UIヘルパー
+├── config.yml                     # 中央設定ファイル
+├── requirements.txt               # Python依存関係
+├── pytest.ini                     # テスト設定
+├── data/                          # サンプルデータファイル
+├── images/                        # サンプル画像
+├── assets/                        # UIアセットとスクリーンショット
+├── doc/                           # ドキュメント
+└── utils/                         # ユーティリティスクリプト
+```
