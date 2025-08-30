@@ -45,7 +45,6 @@
 | | WeatherDemo | OpenWeatherMap API連携 |
 | | FileSearchVectorStoreDemo | FileSearch専用 |
 | | WebSearchToolsDemo | WebSearch専用 |
-| | ComputerUseDemo | Computer Use Tool |
 | | DemoManager | デモ統合管理・実行制御 |
 
 #### 🎨 処理対象データ
@@ -225,11 +224,6 @@ graph TD
 | 関数名 | 分類 | 処理概要 | 重要度 |
 |--------|------|----------|---------|
 | `WebSearchToolsDemo.run()` | 🎯 実行 | Web検索デモ実行 | ⭐⭐⭐ |
-
-#### ComputerUseDemo
-| 関数名 | 分類 | 処理概要 | 重要度 |
-|--------|------|----------|---------|
-| `ComputerUseDemo.run()` | 🎯 実行 | Computer Useデモ実行 | ⭐⭐ |
 
 ---
 

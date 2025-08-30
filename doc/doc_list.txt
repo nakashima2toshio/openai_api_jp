@@ -35,6 +35,88 @@ city.list.json.gz
 https://bulk.openweathermap.org/sample/
 
 ###  ----------------------------------------------
+⏺ 各モジュールからOpenAI APIの利用箇所を抽出しました。以下に列挙します：
+  OpenAI API 利用箇所
+###  ----------------------------------------------
+  a00_responses_api.py（存在しない - a10_00_responses_api.pyか別名のファイルの可能性）
+
+  a01_structured_outputs_parse_schema.py
+
+  - Line 229: openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+  - Line 230: return openai_client.responses.parse(**api_params)
+
+  a02_responses_tools_pydantic_parse.py
+
+  - Line 309: response = self.client.responses.parse(model=model, input=messages, tools=[...])
+  - Line 421: response = self.client.responses.parse(model=model, input=messages, tools=[...])
+  - Line 578: response = self.client.responses.parse(model=model, input=messages, tools=[...])
+  - Line 716: response = self.client.responses.parse(model=model, input=messages, text_format=MathResponse)
+  - Line 790: response = self.client.responses.parse(model=model, input=messages, text_format=PersonInfo)
+  - Line 849: response = self.client.responses.parse(model=model, input=messages, text_format=ExtractedData)
+  - Line 914: response = self.client.responses.parse(model=model, input=messages, text_format=Query)
+  - Line 973: response = self.client.responses.parse(model=model, input=messages, text_format=TaskWithPriority)
+  - Line 1035: response = self.client.responses.parse(model=model, input=messages, text_format=MathSolution)
+  - Line 1108: response = self.client.responses.parse(model=model, input=messages, text_format=QAResponse)
+
+  a03_images_and_vision.py
+
+  - Line 236: response = self.client.responses.create(model=self.model, input=messages)
+  - Line 396: response = self.client.responses.create(model=self.model, input=messages)
+  - Line 480: response = self.client.images.generate(model=model, prompt=prompt, size=size, quality=quality, n=1)
+
+  a04_audio_speeches.py
+
+  - Line 357: return self.openai_client.audio.speech.with_streaming_response.create(...)
+  - Line 365: return self.openai_client.audio.speech.create(...)
+  - Line 438: return self.openai_client.audio.transcriptions.create(...)
+  - Line 543: return self.openai_client.audio.translations.create(...)
+  - Line 552: return self.openai_client.audio.transcriptions.create(...)
+  - Line 585: resp = self.openai_client.chat.completions.create(...)
+  - Line 824: return self.openai_client.audio.transcriptions.create(...)
+  - Line 845: return self.openai_client.chat.completions.create(...)
+  - Line 855: return self.openai_client.audio.speech.create(...)
+
+  a05_conversation_state.py
+
+  - Line 237: response = self.client.responses.create(model=self.model, input=messages)
+  - Line 258: response = self.client.responses.create(model=self.model, input=query,
+  previous_response_id=initial_response.id)
+  - Line 356: response = self.client.responses.create(model=self.model, input=query, tools=[tool])
+  - Line 382: structured_response = self.client.responses.parse(...)
+  - Line 538: response = self.client.responses.create(model="gpt-4.1", input=query, tools=[weather_tool])
+
+  a06_reasoning_chain_of_thought.py
+
+  - Line 281: response = self.client.responses.create(model=self.model, input=messages)
+  - Line 407: response = self.client.responses.create(model=self.model, input=messages)
+  - Line 535: response = self.client.responses.create(model=self.model, input=messages)
+  - Line 671: response = self.client.responses.create(model=self.model, input=messages)
+  - Line 809: response = self.client.responses.create(model=self.model, input=messages)
+
+  helper_api.py
+
+  - Line 700: self.client = OpenAI(api_key=api_key)
+  - Line 732: return self.client.responses.create(**params)
+  - Line 769: return self.client.responses.parse(**params)
+  - Line 784: return self.client.chat.completions.create(**params)
+
+  helper_st.py
+
+  - 該当行なし: このファイルはUI関連のヘルパー関数のみで、直接的なOpenAI API呼び出しはありません
+
+  主要なAPIパターン
+
+  1. responses.create: 一般的な応答生成
+  2. responses.parse: 構造化出力（Pydanticモデル使用）
+  3. audio.speech.create: テキスト→音声変換
+  4. audio.transcriptions.create: 音声→テキスト変換
+  5. audio.translations.create: 音声→英語テキスト変換
+  6. images.generate: 画像生成（DALL-E）
+  7. chat.completions.create: チャット完了API
+
+###  ----------------------------------------------
+
+###  ----------------------------------------------
 ### 設計書：作成用のプロンプト
 ### ----------------------------------------------
 下記仕様で以下の設計書を更新せよ。

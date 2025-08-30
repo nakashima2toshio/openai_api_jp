@@ -2394,7 +2394,6 @@ class DemoManager:
             "Open Weather API(比較用)" : WeatherDemo("OpenWeatherAPI"),
             "File Search-Tool vector store": FileSearchVectorStoreDemo("FileSearch_vsid"),
             "Tools - Web Search Tools"     : WebSearchToolsDemo("WebSearch"),
-            # "Computer Use Tool Param"      : ComputerUseDemo("Computer_Use"),
         }
 
     @error_handler_ui
