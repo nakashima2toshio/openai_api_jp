@@ -42,7 +42,7 @@ THIS_DIR = Path(__file__).resolve().parent
 # PYTHONPATHに親ディレクトリを追加
 sys.path.insert(0, str(BASE_DIR))
 
-# ヘルパーモジュールをインポート（統一化）
+# ヘルパーモジュールをインポート
 try:
     from helper_st import (
         UIHelper, MessageManagerUI, ResponseProcessorUI,
