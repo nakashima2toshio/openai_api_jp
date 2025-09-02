@@ -1,4 +1,4 @@
-# 📋 a04_audio_speeches.py 設計書
+# 📋 a10_04_audio_speeches.py 設計書
 
 ## 📝 目次
 
@@ -35,7 +35,7 @@
 
 | プログラム名 | クラス・関数名 | 処理概要 |
 |-------------|-------------|----------|
-| a04_audio_speeches.py | BaseDemo | デモ機能の基底クラス（音声用統一化版） |
+| a10_04_audio_speeches.py | BaseDemo | デモ機能の基底クラス（音声用統一化版） |
 | | TextToSpeechDemo | Text to Speech API のデモ |
 | | SpeechToTextDemo | Speech to Text API のデモ |
 | | SpeechTranslationDemo | Speech Translation API のデモ |

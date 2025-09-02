@@ -1,4 +1,4 @@
-# 📋 a00_responses_api.py 設計書
+# 📋 a10_00_responses_api.py 設計書
 
 ## 📝 目次
 
@@ -37,7 +37,7 @@
 
 | プログラム名 | クラス・関数名 | 処理概要 |
 |-------------|-------------|----------|
-| a00_responses_api.py | BaseDemo | デモ機能の基底クラス（統一化版） |
+| a10_00_responses_api.py | BaseDemo | デモ機能の基底クラス（統一化版） |
 | | TextResponseDemo | 基本テキスト応答 |
 | | MemoryResponseDemo | 会話履歴付き応答 |
 | | ImageResponseDemo | 画像入力（URL・Base64対応） |
@@ -558,7 +558,7 @@ graph TD
 
 ## 🎉 まとめ
 
-この設計書は、**a00_responses_api.py** の包括的な技術仕様と実装詳細を網羅した完全ドキュメントです。
+この設計書は、**a10_00_responses_api.py** の包括的な技術仕様と実装詳細を網羅した完全ドキュメントです。
 
 ### 🌟 設計のハイライト
 

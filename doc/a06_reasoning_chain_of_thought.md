@@ -1,4 +1,4 @@
-# 📋 a06_reasoning_chain_of_thought.py 設計書
+# 📋 a10_06_reasoning_chain_of_thought.py 設計書
 
 ## 📝 目次
 
@@ -34,7 +34,7 @@
 
 | プログラム名 | クラス・関数名 | 処理概要 |
 |-------------|-------------|----------|
-| a06_reasoning_chain_of_thought.py | BaseDemo | ベースデモクラス（統一化版） |
+| a10_06_reasoning_chain_of_thought.py | BaseDemo | ベースデモクラス（統一化版） |
 | | StepByStepReasoningDemo | 段階的推論（Step-by-Step）デモ |
 | | HypothesisTestDemo | 仮説検証推論デモ |
 | | TreeOfThoughtDemo | 思考の木（Tree of Thought）デモ |

@@ -26,7 +26,7 @@ helper_st.py
 a10_get_vsid.py
 et_cities_list.py
 
-a00_responses_api.py
+a10_00_responses_api.py
     TextResponseDemo - 基本テキスト応答
     MemoryResponseDemo - 会話履歴付き応答
     ImageResponseDemo - 画像入力（URL・Base64対応）
@@ -45,7 +45,7 @@ https://bulk.openweathermap.org/sample/
 ⏺ 各モジュールからOpenAI APIの利用箇所を抽出しました。以下に列挙します：
   OpenAI API 利用箇所
 ###  ----------------------------------------------
-  a00_responses_api.py（存在しない - a10_00_responses_api.pyか別名のファイルの可能性）
+  a10_00_responses_api.py（存在しない - a10_00_responses_api.pyか別名のファイルの可能性）
 
   a01_structured_outputs_parse_schema.py
 
@@ -148,7 +148,7 @@ doc/helper_st.md
 ・処理の概要
 ・サブプログラムの一覧表：
 　（下記が例だが、表で提供して欲しい：）
-a00_responses_api.py
+a10_00_responses_api.py
     TextResponseDemo - 基本テキスト応答
     MemoryResponseDemo - 会話履歴付き応答
     ImageResponseDemo - 画像入力（URL・Base64対応）

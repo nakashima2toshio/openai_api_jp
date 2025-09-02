@@ -1,4 +1,4 @@
-# 📋 a05_conversation_state.py 設計書
+# 📋 a10_05_conversation_state.py 設計書
 
 ## 📝 目次
 
@@ -34,7 +34,7 @@
 
 | プログラム名 | クラス・関数名 | 処理概要 |
 |-------------|-------------|----------|
-| a05_conversation_state.py | BaseDemo | ベースデモクラス（統一化版） |
+| a10_05_conversation_state.py | BaseDemo | ベースデモクラス（統一化版） |
 | | StatefulConversationDemo | ステートフルな会話継続デモ |
 | | WebSearchParseDemo | Web検索と構造化パースデモ |
 | | FunctionCallingDemo | Function Callingデモ |

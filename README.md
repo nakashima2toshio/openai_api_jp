@@ -15,47 +15,67 @@
 
 [ドキュメント] ./doc/ 以下のディレクトリ、プログラムと同名のファイル.md
 -----------------------------------------------------------------------
+## OpenAI APIの使い方： JupyterでAPIの基本を試そう
+- a0_simple_api.ipynb
 
 ### **OpenAI Responses API Integrated Demo**
 
 
-| Proguram Name                             | Overview                                                 |
-| ----------------------------------------- | -------------------------------------------------------- |
-| a10_00_responses_api.py                   | Main integrated demo showcasing all OpenAI features      |
-| a10_01_structured_outputs_parse_schema.py | Structured outputs with schema validation                |
-| a10_02_responses_tools_pydantic_parse.py  | Pydantic-based parsing and function calling              |
-| a10_03_images_and_vision.py               | Image generation and vision API demonstrations           |
-| a10_04_audio_speeches.py                  | Text-to-speech, transcription, and realtime audio        |
-| a10_05_conversation_state.py              | Conversation state management using previous_response_id |
-| a10_06_reasoning_chain_of_thought.py      | Chain-of-thought reasoning patterns                      |
-|                                           |                                                          |
+| Proguram Name                          | Overview                                                 |
+| -------------------------------------- | -------------------------------------------------------- |
+| a00_responses_api.py                   | Main integrated demo showcasing all OpenAI features      |
+| a01_structured_outputs_parse_schema.py | Structured outputs with schema validation                |
+| a02_responses_tools_pydantic_parse.py  | Pydantic-based parsing and function calling              |
+| a03_images_and_vision.py               | Image generation and vision API demonstrations           |
+| a04_audio_speeches.py                  | Text-to-speech, transcription, and realtime audio        |
+| a05_conversation_state.py              | Conversation state management using previous_response_id |
+| a06_reasoning_chain_of_thought.py      | Chain-of-thought reasoning patterns                      |
 
 **主要API**: `responses.create`, Vector Stores API, OpenWeatherMap API, Web Search Tool, Computer Use Tool
-| プログラム名 | 概要 |
-|------------|------|
-| a10_00_responses_api.py | OpenAI APIの全機能を統合的に紹介するメインデモ |
-| a10_01_structured_outputs_parse_schema.py | スキーマ検証を用いた構造化出力 |
-| a10_02_responses_tools_pydantic_parse.py | Pydanticベースの解析と関数呼び出し |
-| a10_03_images_and_vision.py | 画像生成とビジョンAPIのデモンストレーション |
-| a10_04_audio_speeches.py | テキスト読み上げ、文字起こし、リアルタイム音声処理 |
-| a10_05_conversation_state.py | previous_response_idを使用した会話状態管理 |
 
+
+| プログラム名                           | 概要                                               |
+| -------------------------------------- | -------------------------------------------------- |
+| a00_responses_api.py                   | OpenAI APIの全機能を統合的に紹介するメインデモ     |
+| a01_structured_outputs_parse_schema.py | スキーマ検証を用いた構造化出力                     |
+| a02_responses_tools_pydantic_parse.py  | Pydanticベースの解析と関数呼び出し                 |
+| a03_images_and_vision.py               | 画像生成とビジョンAPIのデモンストレーション        |
+| a04_audio_speeches.py                  | テキスト読み上げ、文字起こし、リアルタイム音声処理 |
+| a05_conversation_state.py              | previous_response_idを使用した会話状態管理         |
+| a06_reasoning_chain_of_thought.py      | Chain-of-thought 推論パターン                      |
 
 ---
+
+## a00_responses_api.py
+
+
+| プログラム名         | クラス・関数名            | 処理概要                         |
+| -------------------- | ------------------------- | -------------------------------- |
+| a00_responses_api.py | BaseDemo                  | デモ機能の基底クラス（統一化版） |
+|                      | TextResponseDemo          | 基本テキスト応答                 |
+|                      | MemoryResponseDemo        | 会話履歴付き応答                 |
+|                      | ImageResponseDemo         | 画像入力（URL・Base64対応）      |
+|                      | StructuredOutputDemo      | 構造化出力（create・parse対応）  |
+|                      | WeatherDemo               | OpenWeatherMap API連携           |
+|                      | FileSearchVectorStoreDemo | FileSearch専用                   |
+|                      | WebSearchToolsDemo        | WebSearch専用                    |
+|                      | DemoManager               | デモ統合管理・実行制御           |
 
 ## a01_structured_outputs_parse_schema.py
 
 **Structured Outputs 6パターン**
 
 
-| 機能名                   | 概要                                                             |
-| ------------------------ | ---------------------------------------------------------------- |
-| イベント情報抽出         | テキストからイベント名、日付、参加者を構造化して抽出するデモ     |
-| 数学的思考ステップ       | 数学問題を段階的に解く思考プロセスを構造化出力で表現             |
-| UIコンポーネント生成     | UI設計要求から再帰的なコンポーネント構造をJSON形式で自動生成     |
-| エンティティ抽出         | テキストから属性、色、動物などの複数種類のエンティティを同時抽出 |
-| 条件分岐スキーマ         | ユーザー情報または住所情報を判別して適切なスキーマで構造化       |
-| モデレーション＆拒否処理 | 不適切コンテンツの検出と拒否理由の構造化された出力               |
+| プログラム名                              | クラス・関数名        | 処理概要                         |
+| ----------------------------------------- | --------------------- | -------------------------------- |
+| a10_01_structured_outputs_parse_schema.py | BaseDemo              | デモ機能の基底クラス（統一化版） |
+|                                           | EventExtractionDemo   | イベント情報抽出デモ             |
+|                                           | MathReasoningDemo     | 数学的思考ステップデモ           |
+|                                           | UIGenerationDemo      | UIコンポーネント生成デモ         |
+|                                           | EntityExtractionDemo  | エンティティ抽出デモ             |
+|                                           | ConditionalSchemaDemo | 条件分岐スキーマデモ             |
+|                                           | ModerationDemo        | モデレーション＆拒否処理デモ     |
+|                                           | DemoManager           | デモの管理クラス（統一化版）     |
 
 **主要API**: `responses.parse`, Pydantic モデル
 
@@ -66,18 +86,22 @@
 **Pydantic Parse 高度デモ**
 
 
-| 機能名                | 概要                                                 |
-| --------------------- | ---------------------------------------------------- |
-| シンプルデータ抽出    | 基本的な人物情報をPydanticモデルで抽出する入門デモ   |
-| 基本的なFunction Call | 天気APIとニュース検索の基本的な関数呼び出し実装      |
-| 入れ子構造            | プロジェクトとタスクの階層構造を持つ複雑なデータ処理 |
-| Enum型                | 温度単位などの列挙型を使った型安全なパラメータ処理   |
-| 自然文構造化出力      | 段階的な問題解決プロセスを自然文で構造化して出力     |
-| 複数エンティティ抽出  | 人物と書籍情報を同時に抽出する複合エンティティ処理   |
-| 複雑なクエリ          | SQL風の条件指定とソート機能を持つ高度なクエリ処理    |
-| 動的Enum              | 優先度付きタスク管理での動的な列挙型活用             |
-| 思考の連鎖(CoT)       | Chain of Thought思考プロセスの実装と可視化           |
-| 会話履歴              | 連続対話での文脈保持と構造化された質疑応答管理       |
+| プログラム名                             | クラス・関数名                  | 処理概要                               |
+| ---------------------------------------- | ------------------------------- | -------------------------------------- |
+| a10_02_responses_tools_pydantic_parse.py | BaseDemo                        | デモ機能の基底クラス                   |
+|                                          | BasicFunctionCallDemo           | 基本的なfunction callのデモ            |
+|                                          | MultipleToolsDemo               | 複数ツールの登録・複数関数呼び出しデモ |
+|                                          | AdvancedMultipleToolsDemo       | 高度な複数ツール呼び出しデモ           |
+|                                          | NestedStructureDemo             | 入れ子構造のデモ                       |
+|                                          | EnumTypeDemo                    | Enum型のデモ                           |
+|                                          | NaturalTextStructuredOutputDemo | 自然文での構造化出力デモ               |
+|                                          | SimpleDataExtractionDemo        | シンプルなデータ抽出デモ               |
+|                                          | MultipleEntityExtractionDemo    | 複数エンティティ抽出デモ               |
+|                                          | ComplexQueryDemo                | 複雑なクエリパターンデモ               |
+|                                          | DynamicEnumDemo                 | 動的な列挙型デモ                       |
+|                                          | ChainOfThoughtDemo              | 思考の連鎖デモ                         |
+|                                          | ConversationHistoryDemo         | 会話履歴デモ                           |
+|                                          | DemoManager                     | デモの管理クラス                       |
 
 **主要API**: `responses.parse`, `pydantic_function_tool`, OpenWeatherMap API
 
@@ -88,11 +112,13 @@
 **画像＆ビジョンAPI**
 
 
-| 機能名                             | 概要                                                   |
-| ---------------------------------- | ------------------------------------------------------ |
-| 入力画像(URL) → テキスト生成      | 画像URLを入力として画像内容をテキストで詳細説明生成    |
-| 入力画像データ(Base64) → テキスト | ローカル画像ファイルをBase64エンコードしてテキスト生成 |
-| プロンプト → 画像生成 (DALL-E)    | テキストプロンプトからDALL-E 3/2を使用した画像生成     |
+| プログラム名                | クラス・関数名        | 処理概要                       |
+| --------------------------- | --------------------- | ------------------------------ |
+| a10_03_images_and_vision.py | BaseDemo              | ベースデモクラス（統一化版）   |
+|                             | URLImageToTextDemo    | URL画像からテキスト生成デモ    |
+|                             | Base64ImageToTextDemo | Base64画像からテキスト生成デモ |
+|                             | PromptToImageDemo     | プロンプトから画像生成デモ     |
+|                             | DemoManager           | デモ管理クラス（統一化版）     |
 
 **主要API**: `responses.create`, `images.generate`, DALL-E 3/2
 
@@ -103,13 +129,15 @@
 **音声処理API統合**
 
 
-| 機能名              | 概要                                                             |
-| ------------------- | ---------------------------------------------------------------- |
-| Text to Speech      | テキストを音声に変換するTTSデモ。ストリーミング対応MP3出力       |
-| Speech to Text      | 音声ファイルをテキストに変換するSTTデモ。Whisperモデル使用       |
-| Speech Translation  | 音声ファイルを英語テキストに翻訳。英訳フォールバック機能付き     |
-| Realtime API        | リアルタイム音声対話デモ。マイク入力とスピーカー出力の双方向通信 |
-| Chained Voice Agent | 音声→テキスト→Chat→音声の連鎖処理による音声エージェント       |
+| プログラム名             | クラス・関数名        | 処理概要                               |
+| ------------------------ | --------------------- | -------------------------------------- |
+| a10_04_audio_speeches.py | BaseDemo              | デモ機能の基底クラス（音声用統一化版） |
+|                          | TextToSpeechDemo      | Text to Speech API のデモ              |
+|                          | SpeechToTextDemo      | Speech to Text API のデモ              |
+|                          | SpeechTranslationDemo | Speech Translation API のデモ          |
+|                          | RealtimeApiDemo       | Realtime API のデモ                    |
+|                          | ChainedVoiceAgentDemo | Chained Voice Agent のデモ             |
+|                          | AudioDemoManager      | 音声デモの管理クラス（統一化版）       |
 
 **主要API**: `audio.speech.create`, `audio.transcriptions.create`, `audio.translations.create`, Realtime API
 
@@ -120,11 +148,13 @@
 **会話状態管理**
 
 
-| 機能名                 | 概要                                                     |
-| ---------------------- | -------------------------------------------------------- |
-| ステートフルな会話継続 | `previous_response_id`を使用した前の会話コンテキスト保持 |
-| Web検索と構造化パース  | Web検索実行後の結果をJSON形式に構造化パース              |
-| Function Calling       | OpenWeatherMap APIを使用した天気情報取得の関数呼び出し   |
+| プログラム名                 | クラス・関数名           | 処理概要                     |
+| ---------------------------- | ------------------------ | ---------------------------- |
+| a10_05_conversation_state.py | BaseDemo                 | ベースデモクラス（統一化版） |
+|                              | StatefulConversationDemo | ステートフルな会話継続デモ   |
+|                              | WebSearchParseDemo       | Web検索と構造化パースデモ    |
+|                              | FunctionCallingDemo      | Function Callingデモ         |
+|                              | DemoManager              | デモ管理クラス（統一化版）   |
 
 **主要API**: `responses.create`, `responses.parse`, Web Search Tool, Open-Meteo API
 
@@ -135,13 +165,15 @@
 **Chain of Thought 5パターン**
 
 
-| 機能名                             | 概要                                                           |
-| ---------------------------------- | -------------------------------------------------------------- |
-| Step-by-Step（逐次展開型）         | 問題を順序立てて段階的に解決。数学問題、アルゴリズムに最適     |
-| Hypothesis-Test（仮説検証型）      | 仮説を立てて証拠で検証。バグ解析、実験計画に使用               |
-| Tree-of-Thought（分岐探索型）      | 複数の思考経路を探索して最適解を発見。パズル、最適化に適用     |
-| Pros-Cons-Decision（賛否比較型）   | メリット・デメリットを比較して合理的決定。技術選定に有効       |
-| Plan-Execute-Reflect（反復改良型） | 計画・実行・振り返りのループで継続改善。プロジェクト管理に使用 |
+| プログラム名                         | クラス・関数名          | 処理概要                                     |
+| ------------------------------------ | ----------------------- | -------------------------------------------- |
+| a10_06_reasoning_chain_of_thought.py | BaseDemo                | ベースデモクラス（統一化版）                 |
+|                                      | StepByStepReasoningDemo | 段階的推論（Step-by-Step）デモ               |
+|                                      | HypothesisTestDemo      | 仮説検証推論デモ                             |
+|                                      | TreeOfThoughtDemo       | 思考の木（Tree of Thought）デモ              |
+|                                      | ProsConsDecisionDemo    | 賛否比較決定（Pros-Cons-Decision）デモ       |
+|                                      | PlanExecuteReflectDemo  | 計画実行振り返り（Plan-Execute-Reflect）デモ |
+|                                      | DemoManager             | デモ管理クラス（統一化版）                   |
 
 **主要API**: `responses.create`, 推論系モデル対応
 

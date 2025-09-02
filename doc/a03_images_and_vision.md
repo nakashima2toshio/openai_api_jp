@@ -1,4 +1,4 @@
-# 📋 a03_images_and_vision.py 設計書
+# 📋 a10_03_images_and_vision.py 設計書
 
 ## 📝 目次
 
@@ -34,7 +34,7 @@
 
 | プログラム名 | クラス・関数名 | 処理概要 |
 |-------------|-------------|----------|
-| a03_images_and_vision.py | BaseDemo | ベースデモクラス（統一化版） |
+| a10_03_images_and_vision.py | BaseDemo | ベースデモクラス（統一化版） |
 | | URLImageToTextDemo | URL画像からテキスト生成デモ |
 | | Base64ImageToTextDemo | Base64画像からテキスト生成デモ |
 | | PromptToImageDemo | プロンプトから画像生成デモ |
