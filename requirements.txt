@@ -150,7 +150,7 @@ networkx==3.4.2
 notebook==7.3.3
 notebook_shim==0.2.4
 numpy==1.26.4
-openai==1.91.0
+openai==1.102.0
 openai-agents @ git+https://github.com/openai/openai-agents-python.git@18cb55e4c45f096d00263c3561d6f22a2299368e
 opt_einsum==3.4.0
 optree==0.15.0
@@ -202,7 +202,7 @@ pytest-benchmark==5.1.0
 pytest-cov==6.2.1
 pytest-mock==3.14.1
 python-dateutil==2.9.0.post0
-python-dotenv==1.1.0
+python-dotenv==1.1.1
 python-json-logger==3.3.0
 python-multipart==0.0.20
 pytz==2025.2

@@ -1,6 +1,6 @@
 # streamlit run a03_images_and_vision.py --server.port=8503
 # --------------------------------------------------
-# OpenAI 画像＆ビジョンAPI デモアプリケーション（統一化版）
+# OpenAI 画像＆ビジョンAPI デモアプリケーション
 # Streamlitを使用したインタラクティブなAPIテストツール
 # 統一化版: a10_00_responses_api.pyの構成・構造・ライブラリ・エラー処理の完全統一
 # --------------------------------------------------
@@ -148,7 +148,7 @@ class BaseDemo(ABC):
 
 
 # ==================================================
-# 画像＆ビジョンデモクラス（統一化版）
+# 画像＆ビジョンデモクラス
 # ==================================================
 class URLImageToTextDemo(BaseDemo):
     """URL画像からテキスト生成デモ"""
@@ -163,23 +163,23 @@ class URLImageToTextDemo(BaseDemo):
             st.write(
                 "responses.create()での画像解析実装。EasyInputMessageParamでテキスト+画像を組み合わせ、ResponseProcessorUIで結果を表示。")
             st.code("""
-# 画像URLからテキスト生成の実装例
-from openai import OpenAI
-from openai.types.responses import EasyInputMessageParam, ResponseInputTextParam, ResponseInputImageParam
-
-client = OpenAI()
-messages = [
-    EasyInputMessageParam(
-        role="user",
-        content=[
-            ResponseInputTextParam(type="input_text", text="この画像を日本語で説明してください"),
-            ResponseInputImageParam(type="input_image", image_url=image_url, detail="auto")
-        ]
-    )
-]
-
-response = client.responses.create(model=model, input=messages)
-            """, language="python")
+            # 画像URLからテキスト生成の実装例
+            from openai import OpenAI
+            from openai.types.responses import EasyInputMessageParam, ResponseInputTextParam, ResponseInputImageParam
+            
+            client = OpenAI()
+            messages = [
+                EasyInputMessageParam(
+                    role="user",
+                    content=[
+                        ResponseInputTextParam(type="input_text", text="この画像を日本語で説明してください"),
+                        ResponseInputImageParam(type="input_image", image_url=image_url, detail="auto")
+                    ]
+                )
+            ]
+            
+            response = client.responses.create(model=model, input=messages)
+                        """, language="python")
         
         # 入力エリア
         st.subheader("📤 入力")
@@ -261,32 +261,32 @@ class Base64ImageToTextDemo(BaseDemo):
             st.write(
                 "Base64画像の解析実装。画像ファイルをBase64エンコードしてResponseInputImageParamで送信、responses.create()で処理。")
             st.code("""
-# Base64画像からテキスト生成の実装例
-import base64
-from openai import OpenAI
-from openai.types.responses import EasyInputMessageParam, ResponseInputTextParam, ResponseInputImageParam
-
-# 画像をBase64エンコード
-with open(image_path, "rb") as image_file:
-    image_base64 = base64.b64encode(image_file.read()).decode('utf-8')
-
-client = OpenAI()
-messages = [
-    EasyInputMessageParam(
-        role="user",
-        content=[
-            ResponseInputTextParam(type="input_text", text=prompt),
-            ResponseInputImageParam(
-                type="input_image",
-                image_url=f"data:image/png;base64,{image_base64}",
-                detail="auto"
-            )
-        ]
-    )
-]
-
-response = client.responses.create(model=model, input=messages)
-            """, language="python")
+            # Base64画像からテキスト生成の実装例
+            import base64
+            from openai import OpenAI
+            from openai.types.responses import EasyInputMessageParam, ResponseInputTextParam, ResponseInputImageParam
+            
+            # 画像をBase64エンコード
+            with open(image_path, "rb") as image_file:
+                image_base64 = base64.b64encode(image_file.read()).decode('utf-8')
+            
+            client = OpenAI()
+            messages = [
+                EasyInputMessageParam(
+                    role="user",
+                    content=[
+                        ResponseInputTextParam(type="input_text", text=prompt),
+                        ResponseInputImageParam(
+                            type="input_image",
+                            image_url=f"data:image/png;base64,{image_base64}",
+                            detail="auto"
+                        )
+                    ]
+                )
+            ]
+            
+            response = client.responses.create(model=model, input=messages)
+                        """, language="python")
         
         # 入力エリア
         st.subheader("📤 入力")
