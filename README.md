@@ -5,59 +5,41 @@
 - OpenAI APIの学習用サンプルプログラム集の機能一覧です。
 - 各プログラムは異なるAPIの側面と機能を実際に体験できるよう設計されており、
 - 基本的な使用法から高度な応用まで段階的に学習できます。
+- （注）バージョンにより、右ペインの説明は拡充、整理されています。
 
 #### 環境のセットアップ
 
-[環境セットアップ](https://./README_setup.md)
+[環境セットアップ](https://./README_setup.md)  <-- こちらを参照のこと
 
 #### ドキュメント、設計書：
 
 [ドキュメント] ./doc/ 以下のディレクトリ、プログラムと同名のファイル.md
 -----------------------------------------------------------------------
 
-## a00_responses_api.py 画面
-
-![image.png](assets/a00_image.png?t=1756205198890)
-
-### a01_structured_outputs_parse_schema.py　画面
-
-![a01_image.png](assets/a01_image.png)
-
-### a02_responses_tools_pydantic_parse.py　画面
-
-![a02_image.png](assets/a02_image.png)
-
-### a03_images_and_vision.py　画面
-
-![a03_image.png](assets/a03_image.png)
-
-### a04_audio_speeches.py　画面
-
-![a04_image.png](assets/a04_image.png)
-
-### a05_conversation_state.py　画面
-
-![a05_image.png](assets/a05_image.png)
-
-### a06_reasoning_chain_of_thought.py　画面
-
-![a06_image.png](assets/a06_image.png)
-
-### **OpenAI Responses API 統合デモ**
+### **OpenAI Responses API Integrated Demo**
 
 
-| 機能名                    | 概要                                                                                |
-| ------------------------- | ----------------------------------------------------------------------------------- |
-| Text Responses (One Shot) | 基本的なテキスト応答デモ。デフォルトメッセージ+ユーザー入力でワンショット応答を実行 |
-| Text Responses (Memory)   | 連続会話対応デモ。`previous_response_id`を使った会話状態の継続と履歴管理            |
-| Image to Text (URL)       | 画像URL入力からテキスト生成。マルチモーダル対応のビジョン機能デモ                   |
-| Image to Text (Base64)    | ローカル画像ファイル（Base64）からテキスト生成。画像アップロード対応                |
-| Structured Output         | 構造化出力デモ。イベント情報の抽出とPydanticモデルによる型安全な出力                |
-| Open Weather API          | 外部API連携デモ。OpenWeatherMap APIを使用したリアルタイム天気情報取得               |
-| File Search-Tool          | Vector Store検索デモ。ファイル検索ツールによるRAG（検索拡張生成）実装               |
-| Web Search Tools          | Web検索ツール専用デモ。地域設定対応のリアルタイムWeb検索機能                        |
+| Proguram Name                             | Overview                                                 |
+| ----------------------------------------- | -------------------------------------------------------- |
+| a10_00_responses_api.py                   | Main integrated demo showcasing all OpenAI features      |
+| a10_01_structured_outputs_parse_schema.py | Structured outputs with schema validation                |
+| a10_02_responses_tools_pydantic_parse.py  | Pydantic-based parsing and function calling              |
+| a10_03_images_and_vision.py               | Image generation and vision API demonstrations           |
+| a10_04_audio_speeches.py                  | Text-to-speech, transcription, and realtime audio        |
+| a10_05_conversation_state.py              | Conversation state management using previous_response_id |
+| a10_06_reasoning_chain_of_thought.py      | Chain-of-thought reasoning patterns                      |
+|                                           |                                                          |
 
 **主要API**: `responses.create`, Vector Stores API, OpenWeatherMap API, Web Search Tool, Computer Use Tool
+| プログラム名 | 概要 |
+|------------|------|
+| a10_00_responses_api.py | OpenAI APIの全機能を統合的に紹介するメインデモ |
+| a10_01_structured_outputs_parse_schema.py | スキーマ検証を用いた構造化出力 |
+| a10_02_responses_tools_pydantic_parse.py | Pydanticベースの解析と関数呼び出し |
+| a10_03_images_and_vision.py | 画像生成とビジョンAPIのデモンストレーション |
+| a10_04_audio_speeches.py | テキスト読み上げ、文字起こし、リアルタイム音声処理 |
+| a10_05_conversation_state.py | previous_response_idを使用した会話状態管理 |
+
 
 ---
 
@@ -172,6 +154,34 @@
 | ------------- | -------------------------------------------------------------------------------------------- | --------------------- |
 | helper_api.py | OpenAI Python SDK 呼び出しや共通ユーティリティの集約（クライアント初期化・共通呼び出し等）。 | **OpenAI Python SDK** |
 | helper_st.py  | Streamlit UI 用の共通部品（レイアウト/入力/表示まわりのヘルパー）。                          | **Streamlit**         |
+
+## a00_responses_api.py 画面
+
+![image.png](assets/a00_image.png?t=1756205198890)
+
+### a01_structured_outputs_parse_schema.py　画面
+
+![a01_image.png](assets/a01_image.png)
+
+### a02_responses_tools_pydantic_parse.py　画面
+
+![a02_image.png](assets/a02_image.png)
+
+### a03_images_and_vision.py　画面
+
+![a03_image.png](assets/a03_image.png)
+
+### a04_audio_speeches.py　画面
+
+![a04_image.png](assets/a04_image.png)
+
+### a05_conversation_state.py　画面
+
+![a05_image.png](assets/a05_image.png)
+
+### a06_reasoning_chain_of_thought.py　画面
+
+![a06_image.png](assets/a06_image.png)
 
 ---
 
