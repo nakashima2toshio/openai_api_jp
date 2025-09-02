@@ -321,7 +321,40 @@ class TextResponseDemo(BaseDemo):
             response = self.call_api_unified(messages, temperature=temperature)
 
         st.success("応答を取得しました")
-        ResponseProcessorUI.display_response(response)
+        self._display_response_with_info(response, user_input)
+        
+    def _display_response_with_info(self, response, user_input: str):
+        """応答と右ペイン情報の表示"""
+        col1, col2 = st.columns([3, 1])
+        
+        with col1:
+            # メインレスポンスの表示
+            ResponseProcessorUI.display_response(response)
+            
+        with col2:
+            # 情報パネル
+            st.write("**📊 実行情報**")
+            
+            # モデル情報
+            st.metric("使用モデル", self.model.split('-')[0].upper())
+            
+            # トークン使用量
+            if hasattr(response, 'usage') and response.usage:
+                usage = response.usage
+                if hasattr(usage, 'total_tokens'):
+                    st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
+                if hasattr(usage, 'prompt_tokens'):
+                    st.metric("入力トークン", getattr(usage, 'prompt_tokens', 0))
+                if hasattr(usage, 'completion_tokens'):
+                    st.metric("出力トークン", getattr(usage, 'completion_tokens', 0))
+            
+            # 入力文字数
+            st.metric("入力文字数", len(user_input))
+            
+            # レスポンスID
+            if hasattr(response, 'id'):
+                response_id = getattr(response, 'id', 'N/A')
+                st.write(f"**ID**: {response_id[:8]}..." if len(str(response_id)) > 8 else f"**ID**: {response_id}")
 
 
 # ==================================================
@@ -960,7 +993,40 @@ class ImageResponseDemo(BaseDemo):
             response = self.call_api_unified(messages, temperature=temperature)
 
         st.subheader("回答:")
-        ResponseProcessorUI.display_response(response)
+        self._display_image_response_with_info(response, question, image_url)
+        
+    def _display_image_response_with_info(self, response, question: str, image_url: str):
+        """画像応答と右ペイン情報の表示"""
+        col1, col2 = st.columns([3, 1])
+        
+        with col1:
+            # メインレスポンスの表示
+            ResponseProcessorUI.display_response(response)
+            
+        with col2:
+            # 情報パネル
+            st.write("**📊 実行情報**")
+            
+            # モデル情報
+            st.metric("使用モデル", self.model.split('-')[0].upper())
+            
+            # トークン使用量
+            if hasattr(response, 'usage') and response.usage:
+                usage = response.usage
+                if hasattr(usage, 'total_tokens'):
+                    st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
+            
+            # 入力タイプ
+            st.metric("入力タイプ", "画像+テキスト")
+            
+            # 質問文字数
+            st.metric("質問文字数", len(question))
+            
+            # 画像ソース
+            if image_url.startswith('http'):
+                st.write("**画像**: URL")
+            else:
+                st.write("**画像**: Base64")
 
     def _process_base64_image(self, file_path: str, temperature: Optional[float]):
         """Base64画像の処理（統一化版）"""
@@ -968,7 +1034,15 @@ class ImageResponseDemo(BaseDemo):
         if not b64:
             return
 
-        st.image(file_path, caption="選択画像", width=320)
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            st.image(file_path, caption="選択画像", use_container_width=True)
+        with col2:
+            # ファイル情報
+            st.write("**📁 ファイル情報**")
+            file_size = Path(file_path).stat().st_size
+            st.metric("サイズ", f"{file_size // 1024} KB")
+            st.write(f"**形式**: {Path(file_path).suffix.upper()}")
 
         messages = get_default_messages()
         messages.append(
@@ -1492,7 +1566,7 @@ class WeatherDemo(BaseDemo):
         return city, row["lat"], row["lon"]
 
     def _display_weather(self, lat: float, lon: float, city_name: str = None):
-        """天気情報の表示（改修版）"""
+        """天気情報の表示（改修版・右ペイン付き）"""
         try:
             # 実行時間の計測開始
             start_time = time.time()
@@ -1504,22 +1578,38 @@ class WeatherDemo(BaseDemo):
             if today:
                 st.success("✅ 現在の天気情報を取得しました")
 
-                # 現在の天気表示
-                with st.container():
+                # メインコンテンツと右ペイン
+                main_col, info_col = st.columns([3, 1])
+                
+                with main_col:
+                    # 現在の天気表示
                     st.write("### 📍 本日の天気")
 
                     # メトリクス表示
-                    col1, col2, col3, col4 = st.columns(4)
+                    col1, col2, col3 = st.columns(3)
                     with col1:
                         st.metric("🏙️ 都市", today['city'])
                     with col2:
                         st.metric("🌡️ 気温", f"{today['temperature']}℃")
                     with col3:
                         st.metric("💨 天気", today['description'])
-                    with col4:
-                        # 座標情報
-                        coord = today.get('coord', {})
-                        st.metric("📍 座標", f"{coord.get('lat', 'N/A'):.2f}, {coord.get('lon', 'N/A'):.2f}")
+                        
+                with info_col:
+                    # 情報パネル
+                    st.write("**📊 詳細情報**")
+                    
+                    # 座標情報
+                    coord = today.get('coord', {})
+                    st.metric("📍 緯度", f"{coord.get('lat', 'N/A'):.2f}")
+                    st.metric("📍 経度", f"{coord.get('lon', 'N/A'):.2f}")
+                    
+                    # その他の情報
+                    if 'humidity' in today:
+                        st.metric("💧 湿度", f"{today['humidity']}%")
+                    if 'pressure' in today:
+                        st.metric("🌪️ 気圧", f"{today['pressure']}hPa")
+                    if 'wind_speed' in today:
+                        st.metric("🌬️ 風速", f"{today['wind_speed']}m/s")
 
             # 週間予報
             with st.spinner("📊 5日間予報を取得中..."):
@@ -1561,13 +1651,22 @@ class WeatherDemo(BaseDemo):
             end_time = time.time()
             execution_time = end_time - start_time
 
-            with st.expander("🔧 API実行詳細", expanded=False):
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    st.metric("実行時間", f"{execution_time:.2f}秒")
-                with col2:
-                    st.metric("API呼び出し数", "2回")  # 現在天気 + 5日間予報
-                with col3:
+            # API実行情報を右ペインに表示
+            st.write("---")
+            detail_col, metric_col = st.columns([3, 1])
+            
+            with detail_col:
+                with st.expander("🔧 API実行詳細", expanded=False):
+                    st.write(f"**実行時間**: {execution_time:.2f}秒")
+                    st.write(f"**API呼び出し数**: 2回")
+                    st.write(f"**エンドポイント**: OpenWeatherMap API")
+                    
+            with metric_col:
+                st.write("**📋 実行サマリ**")
+                st.metric("実行時間", f"{execution_time:.2f}秒")
+                st.metric("API呼び出し", "2回")
+                if today:
+                    st.metric("データ取得", "成功")
                     st.metric("データ形式", "JSON")
 
                 st.write("**API詳細:**")
@@ -2360,10 +2459,41 @@ class WebSearchToolsDemo(BaseDemo):
                 )
 
             st.subheader("検索結果")
-            ResponseProcessorUI.display_response(response)
+            self._display_websearch_results(response, query, context_size)
 
         except Exception as e:
             self.handle_error(e)
+            
+    def _display_websearch_results(self, response, query: str, context_size: str):
+        """ウェブ検索結果と右ペイン情報の表示"""
+        col1, col2 = st.columns([3, 1])
+        
+        with col1:
+            # メイン検索結果の表示
+            ResponseProcessorUI.display_response(response)
+            
+        with col2:
+            # 情報パネル
+            st.write("**📊 検索情報**")
+            
+            # 検索設定
+            st.metric("検索地域", "Tokyo, JP")
+            st.metric("コンテキスト", context_size)
+            
+            # クエリ情報
+            st.metric("クエリ文字数", len(query))
+            
+            # トークン使用量
+            if hasattr(response, 'usage') and response.usage:
+                usage = response.usage
+                if hasattr(usage, 'total_tokens'):
+                    st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
+            
+            # モデル情報
+            st.write(f"**モデル**: {self.model}")
+            
+            # ツール使用状態
+            st.write("**🔧 ツール**: WebSearch")
 
 
 # ==================================================

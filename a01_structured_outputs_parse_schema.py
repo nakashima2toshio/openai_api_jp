@@ -1,6 +1,6 @@
 # streamlit run a01_structured_outputs_parse_schema.py --server.port=8501
 # --------------------------------------------------
-# OpenAI Structured Outputs Parse Schema デモアプリケーション（統一化版）
+# OpenAI Structured Outputs Parse Schema デモアプリケーション
 # Streamlitを使用したインタラクティブなAPIテストツール
 # 統一化版: a10_00_responses_api.pyの構成・構造・ライブラリ・エラー処理の完全統一
 # --------------------------------------------------

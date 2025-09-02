@@ -317,13 +317,46 @@ class BasicFunctionCallDemo(BaseDemo):
 
             st.success("応答を取得しました")
 
-            # Function callsの処理
-            self._handle_function_calls(response)
-
-            ResponseProcessorUI.display_response(response)
+            # Function callsの処理と右ペイン表示
+            self._display_with_info(response, user_input, model)
 
         except Exception as e:
             self.handle_error(e)
+
+    def _display_with_info(self, response, user_input: str, model: str):
+        """結果と右ペイン情報の表示"""
+        col1, col2 = st.columns([3, 1])
+        
+        with col1:
+            # Function callsの処理
+            self._handle_function_calls(response)
+            # メインレスポンスの表示
+            ResponseProcessorUI.display_response(response)
+            
+        with col2:
+            # 情報パネル
+            st.write("**📊 実行情報**")
+            
+            # モデル情報
+            st.metric("使用モデル", model.split('-')[0].upper())
+            
+            # 関数呼び出し数
+            if hasattr(response, 'output') and response.output:
+                st.metric("関数呼び出し", len(response.output))
+            
+            # トークン使用量
+            if hasattr(response, 'usage') and response.usage:
+                usage = response.usage
+                if hasattr(usage, 'total_tokens'):
+                    st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
+            
+            # 入力文字数
+            st.metric("入力文字数", len(user_input))
+            
+            # ツール情報
+            st.write("**🔧 ツール**")
+            st.write("- WeatherRequest")
+            st.write("- NewsRequest")
 
     def _handle_function_calls(self, response):
         """Function callsの処理"""
@@ -499,22 +532,48 @@ class AdvancedMultipleToolsDemo(BaseDemo):
 
             st.success("応答を取得しました")
 
-            # Function callsの実行
-            for function_call in response.output:
-                st.write("**関数呼び出し結果:**")
-                st.write(f"関数名: {function_call.name}")
+            # メインコンテンツと右ペイン
+            col1, col2 = st.columns([3, 1])
+            
+            with col1:
+                # Function callsの実行
+                for function_call in response.output:
+                    st.write("**関数呼び出し結果:**")
+                    st.write(f"関数名: {function_call.name}")
 
-                args = function_call.parsed_arguments
-                st.write(f"引数: {args}")
+                    args = function_call.parsed_arguments
+                    st.write(f"引数: {args}")
 
-                if function_call.name == "calculator":
-                    result = self._calculator(args.exp)
-                    st.write(f"計算結果: {result}")
-                elif function_call.name == "faq_search":
-                    result = self._faq_search(args.query)
-                    st.write(f"FAQ検索結果: {result}")
+                    if function_call.name == "calculator":
+                        result = self._calculator(args.exp)
+                        st.write(f"計算結果: {result}")
+                    elif function_call.name == "faq_search":
+                        result = self._faq_search(args.query)
+                        st.write(f"FAQ検索結果: {result}")
 
-            ResponseProcessorUI.display_response(response)
+                ResponseProcessorUI.display_response(response)
+                
+            with col2:
+                # 情報パネル
+                st.write("**📊 実行情報**")
+                
+                # モデル情報
+                st.metric("使用モデル", model.split('-')[0].upper())
+                
+                # 関数呼び出し数
+                if hasattr(response, 'output') and response.output:
+                    st.metric("関数呼び出し", len(response.output))
+                
+                # トークン使用量
+                if hasattr(response, 'usage') and response.usage:
+                    usage = response.usage
+                    if hasattr(usage, 'total_tokens'):
+                        st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
+                
+                # ツール情報
+                st.write("**🔧 ツール**")
+                st.write("- Calculator")
+                st.write("- FAQ Search")
 
         except Exception as e:
             self.handle_error(e)
@@ -858,20 +917,48 @@ class MultipleEntityExtractionDemo(BaseDemo):
 
             st.write("### 抽出結果")
 
-            col1, col2 = st.columns(2)
+            # メインコンテンツと右ペイン
+            main_col, info_col = st.columns([3, 1])
+            
+            with main_col:
+                col1, col2 = st.columns(2)
 
-            with col1:
-                st.write("**人物一覧**")
-                for person in extracted.persons:
-                    st.write(f"- {person.name} ({person.age}歳)")
+                with col1:
+                    st.write("**人物一覧**")
+                    for person in extracted.persons:
+                        st.write(f"- {person.name} ({person.age}歳)")
 
-            with col2:
-                st.write("**書籍一覧**")
-                for book in extracted.books:
-                    st.write(f"- 『{book.title}』")
-                    st.write(f"  著者: {book.author} ({book.year}年)")
+                with col2:
+                    st.write("**書籍一覧**")
+                    for book in extracted.books:
+                        st.write(f"- 『{book.title}』")
+                        st.write(f"  著者: {book.author} ({book.year}年)")
 
-            ResponseProcessorUI.display_response(response)
+                ResponseProcessorUI.display_response(response)
+                
+            with info_col:
+                # 情報パネル
+                st.write("**📊 抽出情報**")
+                
+                # 抽出数
+                st.metric("人物数", len(extracted.persons))
+                st.metric("書籍数", len(extracted.books))
+                
+                # モデル情報
+                st.metric("使用モデル", model.split('-')[0].upper())
+                
+                # トークン使用量
+                if hasattr(response, 'usage') and response.usage:
+                    usage = response.usage
+                    if hasattr(usage, 'total_tokens'):
+                        st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
+                
+                # 入力文字数
+                st.metric("入力文字数", len(user_input))
+                
+                # フォーマット
+                st.write("**📄 フォーマット**")
+                st.write("ExtractedData")
 
         except Exception as e:
             self.handle_error(e)
@@ -921,16 +1008,41 @@ class ComplexQueryDemo(BaseDemo):
 
             query = response.output[0].content[0].parsed
 
-            st.write("**クエリ情報:**")
-            st.write(f"テーブル: {query.table}")
-            st.write(f"ソート列: {query.sort_by}")
-            st.write(f"昇順: {query.ascending}")
+            # メインコンテンツと右ペイン
+            main_col, info_col = st.columns([3, 1])
+            
+            with main_col:
+                st.write("**クエリ情報:**")
+                st.write(f"テーブル: {query.table}")
+                st.write(f"ソート列: {query.sort_by}")
+                st.write(f"昇順: {query.ascending}")
 
-            st.write("**条件一覧:**")
-            for i, condition in enumerate(query.conditions, 1):
-                st.write(f"{i}. {condition.column} {condition.operator} {condition.value}")
+                st.write("**条件一覧:**")
+                for i, condition in enumerate(query.conditions, 1):
+                    st.write(f"{i}. {condition.column} {condition.operator} {condition.value}")
 
-            ResponseProcessorUI.display_response(response)
+                ResponseProcessorUI.display_response(response)
+                
+            with info_col:
+                # 情報パネル
+                st.write("**📊 クエリ情報**")
+                
+                # 条件数
+                st.metric("条件数", len(query.conditions))
+                
+                # モデル情報
+                st.metric("使用モデル", model.split('-')[0].upper())
+                
+                # ソート設定
+                st.write("**🔄 ソート**")
+                st.write(f"列: {query.sort_by}")
+                st.write(f"順: {'ASC' if query.ascending else 'DESC'}")
+                
+                # トークン使用量
+                if hasattr(response, 'usage') and response.usage:
+                    usage = response.usage
+                    if hasattr(usage, 'total_tokens'):
+                        st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
 
         except Exception as e:
             self.handle_error(e)

@@ -548,11 +548,48 @@ response = client.responses.create(model=model, input=messages)
                 st.exception(e)
     
     def _display_tree_results(self):
-        """Tree of Thought 結果の表示"""
+        """Tree of Thought 結果の表示（右ペイン付き）"""
         if f"tree_response_{self.safe_key}" in st.session_state:
             response = st.session_state[f"tree_response_{self.safe_key}"]
+            goal = st.session_state.get(f"tree_goal_{self.safe_key}", "")
+            
             st.subheader("🤖 Tree of Thought 結果")
-            ResponseProcessorUI.display_response(response)
+            
+            # メインコンテンツと右ペイン
+            col1, col2 = st.columns([3, 1])
+            
+            with col1:
+                ResponseProcessorUI.display_response(response)
+                
+            with col2:
+                # 情報パネル
+                st.write("**📊 探索情報**")
+                
+                # モデル情報
+                st.metric("使用モデル", self.model.split('-')[0].upper())
+                
+                # 推論タイプ
+                st.metric("推論タイプ", "Tree of Thought")
+                
+                # 目標文字数
+                if goal:
+                    st.metric("目標文字数", len(goal))
+                
+                # トークン使用量
+                if hasattr(response, 'usage') and response.usage:
+                    usage = response.usage
+                    if hasattr(usage, 'total_tokens'):
+                        st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
+                
+                # 探索情報
+                st.write("**🌳 探索状態**")
+                st.write("分岐探索: 有効")
+                st.write("評価スコア: 0-1")
+                
+                # 実行時間
+                if f"tree_time_{self.safe_key}" in st.session_state:
+                    exec_time = st.session_state[f"tree_time_{self.safe_key}"]
+                    st.metric("実行時間", f"{exec_time:.2f}秒")
 
 
 class ProsConsDecisionDemo(BaseDemo):
@@ -669,13 +706,17 @@ response = client.responses.create(model=model, input=messages)
             ]
             
             with st.spinner("賛否比較決定中..."):
+                start_time = time.time()
                 response = self.client.responses.create(
                     model=self.model,
                     input=messages
                 )
+                exec_time = time.time() - start_time
             
             # セッション状態に保存
             st.session_state[f"decision_response_{self.safe_key}"] = response
+            st.session_state[f"decision_decision_{self.safe_key}"] = topic
+            st.session_state[f"decision_time_{self.safe_key}"] = exec_time
             st.success("✅ 賛否比較決定完了")
             st.rerun()
             

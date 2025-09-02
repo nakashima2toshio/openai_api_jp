@@ -280,8 +280,132 @@ class TextToSpeechDemo(BaseDemo):
     def run(self):
         self.initialize()
 
-        with st.expander("TextToSpeechDemoデモ", expanded=True):
-            st.write("Anthropic APIには、Text-to-Speech, Speech-to-Textはありません。")
+        st.write("## Text-to-Speech デモ")
+        st.write("テキストから音声を生成します。")
+
+        # 入力エリア
+        st.subheader("📤 入力")
+        
+        # テキスト入力
+        text_input = st.text_area(
+            "音声化するテキストを入力してください：",
+            value="こんにちは、OpenAI Text-to-Speech APIのデモンストレーションです。",
+            height=100,
+            max_chars=4096,
+            key=f"tts_text_{self.safe_key}"
+        )
+        
+        # 音声設定
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            voice = UIHelper.select_voice(f"voice_{self.safe_key}")
+        with col2:
+            speed = st.slider(
+                "速度",
+                min_value=0.25,
+                max_value=4.0,
+                value=1.0,
+                step=0.25,
+                key=f"speed_{self.safe_key}"
+            )
+        with col3:
+            response_format = st.selectbox(
+                "出力形式",
+                ["mp3", "opus", "aac", "flac"],
+                key=f"format_{self.safe_key}"
+            )
+        
+        # 生成ボタン
+        if st.button("🎵 音声を生成", key=f"generate_{self.safe_key}"):
+            if text_input:
+                self._generate_speech(text_input, voice, speed, response_format)
+    
+    def _generate_speech(self, text: str, voice: str, speed: float, response_format: str):
+        """音声生成の実行"""
+        try:
+            # 実行時間の計測開始
+            start_time = time.time()
+            
+            # セッション状態に保存
+            st.session_state[f"tts_text_{self.safe_key}"] = text
+            st.session_state[f"tts_voice_{self.safe_key}"] = voice
+            
+            with st.spinner("音声を生成中..."):
+                response = self.openai_client.audio.speech.create(
+                    model=self.model,
+                    voice=voice,
+                    input=text,
+                    speed=speed,
+                    response_format=response_format
+                )
+            
+            # 実行時間の計算
+            generation_time = time.time() - start_time
+            
+            # 音声データを取得
+            audio_data = response.content
+            
+            st.success("音声を生成しました")
+            st.subheader("🎵 生成結果")
+            
+            # メインコンテンツと右ペイン
+            col1, col2 = st.columns([3, 1])
+            
+            with col1:
+                # 音声プレイヤー
+                st.audio(audio_data, format=f"audio/{response_format}")
+                
+                # ダウンロードボタン
+                filename = f"speech_{int(time.time())}.{response_format}"
+                UIHelper.create_audio_download_button(
+                    audio_data, 
+                    filename,
+                    "📥 音声をダウンロード"
+                )
+                
+                # 生成テキストの表示
+                with st.expander("生成したテキスト"):
+                    st.write(text)
+                
+            with col2:
+                # 情報パネル
+                st.write("**📊 生成情報**")
+                
+                # モデル情報
+                st.metric("使用モデル", self.model.upper())
+                
+                # 生成時間
+                st.metric("生成時間", f"{generation_time:.2f}秒")
+                
+                # 音声設定
+                st.write("**🎵 音声設定**")
+                st.write(f"Voice: {voice}")
+                st.write(f"速度: {speed}x")
+                st.write(f"形式: {response_format}")
+                
+                # テキスト情報
+                st.write("**📝 テキスト情報**")
+                st.metric("文字数", len(text))
+                
+                # ファイルサイズ
+                file_size = len(audio_data) / 1024  # KB単位
+                st.metric("ファイルサイズ", f"{file_size:.1f} KB")
+                
+                # コスト推定
+                st.write("**💰 コスト推定**")
+                tts_pricing = {
+                    "tts-1": 0.015,
+                    "tts-1-hd": 0.030,
+                    "gpt-4o-mini-tts": 0.025
+                }
+                if self.model in tts_pricing:
+                    cost = (len(text) / 1000) * tts_pricing[self.model]
+                    st.write(f"${cost:.6f}")
+            
+        except Exception as e:
+            st.error(f"音声生成エラー: {e}")
+            if config.get("experimental.debug_mode", False):
+                st.exception(e)
 
 
 # ==================================================

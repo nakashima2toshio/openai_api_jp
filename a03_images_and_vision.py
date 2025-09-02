@@ -232,15 +232,55 @@ class URLImageToTextDemo(BaseDemo):
                 )
             )
             
+            # 実行時間の計測開始
+            start_time = time.time()
+            
             with st.spinner("処理中..."):
                 response = self.client.responses.create(
                     model=self.model,
                     input=messages,
                 )
             
+            # 実行時間の計算
+            execution_time = time.time() - start_time
+            
+            # セッション状態に保存
+            st.session_state[f"url_image_query_{self.safe_key}"] = prompt
+            st.session_state[f"url_image_url_{self.safe_key}"] = image_url
+            
             st.success("応答を取得しました")
             st.subheader("🤖 回答")
-            ResponseProcessorUI.display_response(response)
+            
+            # メインコンテンツと右ペイン
+            col1, col2 = st.columns([3, 1])
+            
+            with col1:
+                ResponseProcessorUI.display_response(response)
+                
+            with col2:
+                # 情報パネル
+                st.write("**📊 実行情報**")
+                
+                # モデル情報
+                st.metric("使用モデル", self.model.split('-')[0].upper())
+                
+                # 実行時間
+                st.metric("実行時間", f"{execution_time:.2f}秒")
+                
+                # トークン使用量
+                if hasattr(response, 'usage') and response.usage:
+                    usage = response.usage
+                    if hasattr(usage, 'total_tokens'):
+                        st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
+                
+                # 入力情報
+                st.write("**📝 入力情報**")
+                st.metric("プロンプト文字数", len(prompt))
+                
+                # 画像情報
+                st.write("**🖼️ 画像情報**")
+                st.write("ソース: URL")
+                st.write("詳細レベル: auto")
             
         except Exception as e:
             st.error(f"エラーが発生しました: {e}")
@@ -392,15 +432,59 @@ class Base64ImageToTextDemo(BaseDemo):
                 )
             )
             
+            # 実行時間の計測開始
+            start_time = time.time()
+            
             with st.spinner("処理中..."):
                 response = self.client.responses.create(
                     model=self.model,
                     input=messages,
                 )
             
+            # 実行時間の計算
+            execution_time = time.time() - start_time
+            
+            # セッション状態に保存
+            st.session_state[f"base64_image_query_{self.safe_key}"] = prompt
+            st.session_state[f"base64_image_path_{self.safe_key}"] = image_path
+            
+            # ファイルサイズを取得
+            file_size = os.path.getsize(image_path) / 1024  # KB単位
+            
             st.success("応答を取得しました")
             st.subheader("🤖 回答")
-            ResponseProcessorUI.display_response(response)
+            
+            # メインコンテンツと右ペイン
+            col1, col2 = st.columns([3, 1])
+            
+            with col1:
+                ResponseProcessorUI.display_response(response)
+                
+            with col2:
+                # 情報パネル
+                st.write("**📊 実行情報**")
+                
+                # モデル情報
+                st.metric("使用モデル", self.model.split('-')[0].upper())
+                
+                # 実行時間
+                st.metric("実行時間", f"{execution_time:.2f}秒")
+                
+                # トークン使用量
+                if hasattr(response, 'usage') and response.usage:
+                    usage = response.usage
+                    if hasattr(usage, 'total_tokens'):
+                        st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
+                
+                # 入力情報
+                st.write("**📝 入力情報**")
+                st.metric("プロンプト文字数", len(prompt))
+                
+                # 画像情報
+                st.write("**🖼️ 画像情報**")
+                st.write("ソース: Base64")
+                st.metric("ファイルサイズ", f"{file_size:.1f} KB")
+                st.write(f"ファイル: {os.path.basename(image_path)}")
             
         except Exception as e:
             st.error(f"エラーが発生しました: {e}")
@@ -476,6 +560,9 @@ image_url = response.data[0].url
     def _generate_image_from_prompt(self, model: str, prompt: str, size: str, quality: str):
         """DALL-Eで画像生成"""
         try:
+            # 実行時間の計測開始
+            start_time = time.time()
+            
             with st.spinner("画像を生成中...（数秒かかります）"):
                 response = self.client.images.generate(
                     model=model,
@@ -485,23 +572,69 @@ image_url = response.data[0].url
                     n=1
                 )
             
+            # 実行時間の計算
+            generation_time = time.time() - start_time
+            
+            # セッション状態に保存
+            st.session_state[f"dalle_prompt_{self.safe_key}"] = prompt
+            st.session_state[f"dalle_model_{self.safe_key}"] = model
+            
             # 生成された画像を表示
             image_url = response.data[0].url
             st.success("画像を生成しました")
             st.subheader("🤖 生成結果")
-            st.image(image_url, caption="生成画像", use_container_width=True)
             
-            # 画像URLを表示
-            st.text_input("画像URL（ダウンロード用）", value=image_url, key="generated_url")
+            # メインコンテンツと右ペイン
+            col1, col2 = st.columns([3, 1])
             
-            # 詳細情報
-            with st.expander("生成情報"):
-                st.write(f"**モデル**: {model}")
-                st.write(f"**サイズ**: {size}")
-                st.write(f"**品質**: {quality}")
-                st.write(f"**プロンプト**: {prompt}")
-                if hasattr(response.data[0], 'revised_prompt'):
-                    st.write(f"**修正されたプロンプト**: {response.data[0].revised_prompt}")
+            with col1:
+                st.image(image_url, caption="生成画像", use_container_width=True)
+                
+                # 画像URLを表示
+                st.text_input("画像URL（ダウンロード用）", value=image_url, key="generated_url")
+                
+                # 詳細情報
+                with st.expander("生成情報"):
+                    st.write(f"**モデル**: {model}")
+                    st.write(f"**サイズ**: {size}")
+                    st.write(f"**品質**: {quality}")
+                    st.write(f"**プロンプト**: {prompt}")
+                    if hasattr(response.data[0], 'revised_prompt'):
+                        st.write(f"**修正されたプロンプト**: {response.data[0].revised_prompt}")
+                
+            with col2:
+                # 情報パネル
+                st.write("**📊 生成情報**")
+                
+                # モデル情報
+                st.metric("使用モデル", model.upper())
+                
+                # 生成時間
+                st.metric("生成時間", f"{generation_time:.2f}秒")
+                
+                # 画像設定
+                st.write("**🎨 画像設定**")
+                st.write(f"サイズ: {size}")
+                st.write(f"品質: {quality}")
+                
+                # プロンプト情報
+                st.write("**📝 プロンプト**")
+                st.metric("文字数", len(prompt))
+                
+                # 生成枚数
+                st.metric("生成枚数", "1枚")
+                
+                # コスト目安（DALL-E 3の場合）
+                if model == "dall-e-3":
+                    st.write("**💰 コスト目安**")
+                    if quality == "hd" and size == "1024x1024":
+                        st.write("$0.080")
+                    elif quality == "hd":
+                        st.write("$0.120")
+                    elif size == "1024x1024":
+                        st.write("$0.040")
+                    else:
+                        st.write("$0.080")
             
         except Exception as e:
             st.error(f"画像生成エラー: {e}")

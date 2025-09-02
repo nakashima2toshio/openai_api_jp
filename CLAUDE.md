@@ -123,6 +123,22 @@ export EXCHANGERATE_API_KEY='your-exchangerate-api-key'
 - Comprehensive documentation in `/doc` directory with detailed markdown files
 - Assets directory contains UI screenshots and sample images
 
+## UI Layout Pattern (Updated 2025-09-02)
+
+All demo applications follow a consistent 3:1 column layout pattern:
+- **Left column (3 units)**: Main content area displaying API responses and results
+- **Right column (1 unit)**: Information panels showing execution metrics, token usage, and context-specific data
+
+### Files with Right Pane Information Panels:
+- **a00_responses_api.py** - All demo classes include right pane metrics
+- **a02_responses_tools_pydantic_parse.py** - Function calling demos with execution info
+- **a03_images_and_vision.py** - Image processing demos with generation metrics
+- **a04_audio_speeches.py** - Audio generation demos with cost estimation
+- **a05_conversation_state.py** - Conversation state demos with session tracking
+- **a06_reasoning_chain_of_thought.py** - Reasoning demos with time tracking
+
+This pattern was implemented based on the reference design from `anthropic_a00_responses_api.py`
+
 ## Project Structure
 
 ```

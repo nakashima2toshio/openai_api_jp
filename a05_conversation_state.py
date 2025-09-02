@@ -1,6 +1,6 @@
 # streamlit run a05_conversation_state.py --server.port=8505
 # --------------------------------------------------
-# OpenAI 会話状態管理デモアプリケーション（統一化版）
+# OpenAI 会話状態管理デモアプリケーション
 # Streamlitを使用したインタラクティブなAPIテストツール
 # 統一化版: a10_00_responses_api.pyの構成・構造・ライブラリ・エラー処理の完全統一
 # --------------------------------------------------
@@ -241,6 +241,7 @@ follow_up_response = client.responses.create(
             
             # セッション状態に保存
             st.session_state[f"initial_response_{self.safe_key}"] = response
+            st.session_state[f"initial_query_{self.safe_key}"] = question
             st.success(f"✅ Response ID: `{response.id}` を保存しました")
             st.rerun()
             
@@ -263,6 +264,7 @@ follow_up_response = client.responses.create(
             
             # セッション状態に保存
             st.session_state[f"follow_up_response_{self.safe_key}"] = response
+            st.session_state[f"follow_up_query_{self.safe_key}"] = question
             st.success(f"✅ 会話を継続しました - Response ID: `{response.id}`")
             st.rerun()
             
@@ -272,18 +274,81 @@ follow_up_response = client.responses.create(
                 st.exception(e)
     
     def _display_conversation_results(self):
-        """会話結果の表示"""
+        """会話結果の表示（右ペイン付き）"""
         # 初回回答
         if f"initial_response_{self.safe_key}" in st.session_state:
             response = st.session_state[f"initial_response_{self.safe_key}"]
+            initial_query = st.session_state.get(f"initial_query_{self.safe_key}", "")
+            
             st.subheader("🤖 初回の回答")
-            ResponseProcessorUI.display_response(response)
+            
+            # メインコンテンツと右ペイン
+            col1, col2 = st.columns([3, 1])
+            
+            with col1:
+                ResponseProcessorUI.display_response(response)
+                
+            with col2:
+                # 情報パネル
+                st.write("**📊 会話情報**")
+                
+                # モデル情報
+                st.metric("使用モデル", self.model.split('-')[0].upper())
+                
+                # 会話ステップ
+                st.metric("会話ステップ", "初回")
+                
+                # トークン使用量
+                if hasattr(response, 'usage') and response.usage:
+                    usage = response.usage
+                    if hasattr(usage, 'total_tokens'):
+                        st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
+                
+                # 入力文字数
+                if initial_query:
+                    st.metric("入力文字数", len(initial_query))
+                
+                # Response ID
+                if hasattr(response, 'id'):
+                    st.write("**Response ID**")
+                    st.code(getattr(response, 'id', 'N/A')[:8] + "...", language="")
         
         # 追加質問への回答
         if f"follow_up_response_{self.safe_key}" in st.session_state:
             response = st.session_state[f"follow_up_response_{self.safe_key}"]
+            follow_up_query = st.session_state.get(f"follow_up_query_{self.safe_key}", "")
+            
             st.subheader("🤖 追加質問への回答")
-            ResponseProcessorUI.display_response(response)
+            
+            # メインコンテンツと右ペイン
+            col1, col2 = st.columns([3, 1])
+            
+            with col1:
+                ResponseProcessorUI.display_response(response)
+                
+            with col2:
+                # 情報パネル
+                st.write("**📊 会話情報**")
+                
+                # モデル情報
+                st.metric("使用モデル", self.model.split('-')[0].upper())
+                
+                # 会話ステップ
+                st.metric("会話ステップ", "追加")
+                
+                # トークン使用量
+                if hasattr(response, 'usage') and response.usage:
+                    usage = response.usage
+                    if hasattr(usage, 'total_tokens'):
+                        st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
+                
+                # 入力文字数
+                if follow_up_query:
+                    st.metric("入力文字数", len(follow_up_query))
+                
+                # 状態管理
+                st.write("**🔄 状態管理**")
+                st.write("前回のResponse IDを使用")
 
 
 class WebSearchParseDemo(BaseDemo):
@@ -360,6 +425,7 @@ structured_response = client.responses.parse(
                 )
             
             st.session_state[f"search_response_{self.safe_key}"] = response
+            st.session_state[f"search_query_{self.safe_key}"] = query
             st.success(f"✅ Web検索完了 - Response ID: `{response.id}`")
             st.rerun()
             
@@ -396,18 +462,75 @@ structured_response = client.responses.parse(
                 st.exception(e)
     
     def _display_search_results(self):
-        """検索結果の表示"""
+        """検索結果の表示（右ペイン付き）"""
         # 検索結果
         if f"search_response_{self.safe_key}" in st.session_state:
             response = st.session_state[f"search_response_{self.safe_key}"]
+            search_query = st.session_state.get(f"search_query_{self.safe_key}", "")
+            
             st.subheader("🤖 検索結果")
-            ResponseProcessorUI.display_response(response)
+            
+            # メインコンテンツと右ペイン
+            col1, col2 = st.columns([3, 1])
+            
+            with col1:
+                ResponseProcessorUI.display_response(response)
+                
+            with col2:
+                # 情報パネル
+                st.write("**📊 検索情報**")
+                
+                # モデル情報
+                st.metric("使用モデル", self.model.split('-')[0].upper())
+                
+                # 検索タイプ
+                st.metric("検索タイプ", "Web検索")
+                
+                # トークン使用量
+                if hasattr(response, 'usage') and response.usage:
+                    usage = response.usage
+                    if hasattr(usage, 'total_tokens'):
+                        st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
+                
+                # 検索クエリ文字数
+                if search_query:
+                    st.metric("クエリ文字数", len(search_query))
+                
+                # ツール情報
+                st.write("**🔧 ツール**")
+                st.write("web_search_preview")
         
         # 構造化データ
         if f"structured_response_{self.safe_key}" in st.session_state:
             response = st.session_state[f"structured_response_{self.safe_key}"]
+            
             st.subheader("🤖 構造化データ")
-            ResponseProcessorUI.display_response(response)
+            
+            # メインコンテンツと右ペイン
+            col1, col2 = st.columns([3, 1])
+            
+            with col1:
+                ResponseProcessorUI.display_response(response)
+                
+            with col2:
+                # 情報パネル
+                st.write("**📊 パース情報**")
+                
+                # モデル情報
+                st.metric("使用モデル", self.model.split('-')[0].upper())
+                
+                # パースタイプ
+                st.metric("パースタイプ", "構造化JSON")
+                
+                # トークン使用量
+                if hasattr(response, 'usage') and response.usage:
+                    usage = response.usage
+                    if hasattr(usage, 'total_tokens'):
+                        st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
+                
+                # スキーマ情報
+                st.write("**📄 スキーマ**")
+                st.write("APIInfo (Pydantic)")
 
 
 class FunctionCallingDemo(BaseDemo):
@@ -559,7 +682,7 @@ response = client.responses.create(
                 st.exception(e)
     
     def _display_weather_results(self):
-        """天気結果の表示"""
+        """天気結果の表示（右ペイン付き）"""
         # Function Call結果
         if f"function_response_{self.safe_key}" in st.session_state:
             response = st.session_state[f"function_response_{self.safe_key}"]
@@ -567,22 +690,60 @@ response = client.responses.create(
             weather_data = st.session_state.get(f"weather_data_{self.safe_key}", {})
             
             st.subheader(f"🤖 Function Call 結果 - {selected_city}")
-            ResponseProcessorUI.display_response(response)
             
-            # リアルタイム天気データ
-            if weather_data and "error" not in weather_data:
-                st.subheader(f"🌡️ リアルタイム天気データ - {selected_city}")
+            # メインコンテンツと右ペイン
+            main_col, info_col = st.columns([3, 1])
+            
+            with main_col:
+                ResponseProcessorUI.display_response(response)
                 
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    st.metric("🌡️ 気温", f"{weather_data['temperature']}°C")
-                with col2:
-                    st.metric("💧 湿度", f"{weather_data['humidity']}%")
-                with col3:
-                    st.metric("💨 風速", f"{weather_data['wind_speed']} km/h")
-            
-            elif weather_data:
-                st.error(f"天気データ取得エラー: {weather_data.get('error', 'Unknown error')}")
+                # リアルタイム天気データ
+                if weather_data and "error" not in weather_data:
+                    st.subheader(f"🌡️ リアルタイム天気データ - {selected_city}")
+                    
+                    col1, col2, col3 = st.columns(3)
+                    with col1:
+                        st.metric("🌡️ 気温", f"{weather_data['temperature']}°C")
+                    with col2:
+                        st.metric("💧 湿度", f"{weather_data['humidity']}%")
+                    with col3:
+                        st.metric("💨 風速", f"{weather_data['wind_speed']} km/h")
+                
+                elif weather_data:
+                    st.error(f"天気データ取得エラー: {weather_data.get('error', 'Unknown error')}")
+                
+            with info_col:
+                # 情報パネル
+                st.write("**📊 Function Call情報**")
+                
+                # モデル情報
+                st.metric("使用モデル", self.model.split('-')[0].upper())
+                
+                # 都市情報
+                if selected_city:
+                    st.metric("選択都市", selected_city)
+                
+                # トークン使用量
+                if hasattr(response, 'usage') and response.usage:
+                    usage = response.usage
+                    if hasattr(usage, 'total_tokens'):
+                        st.metric("総トークン数", getattr(usage, 'total_tokens', 0))
+                
+                # Function情報
+                st.write("**🔧 Function**")
+                st.write("get_weather")
+                
+                # API情報
+                st.write("**🌐 外部API**")
+                st.write("Open-Meteo API")
+                
+                # データステータス
+                if weather_data:
+                    st.write("**📡 ステータス**")
+                    if "error" in weather_data:
+                        st.write("❗ エラー")
+                    else:
+                        st.write("✅ 正常")
 
 
 # ==================================================
