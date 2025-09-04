@@ -1,6 +1,7 @@
-### 本概要署m、OpenAI API サンプルプログラム一覧
+# OpenAI API from Scratch + streamlit
+## スクラッチで OpenAI API + Streamlit
 
-### 概要
+### 概要 OpenAI API サンプルプログラム一覧
 
 - OpenAI APIの学習用サンプルプログラム集の機能一覧です。
 - 各プログラムは異なるAPIの側面と機能を実際に体験できるよう設計されており、
