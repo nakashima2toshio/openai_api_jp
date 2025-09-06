@@ -9,7 +9,7 @@
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.44%2B-red)](https://streamlit.io/)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
-[English](#) | **日本語** | [中文](#)
+If you prefer English, please use translation tools like Google Translate to read the English version.
 
 </div>
 
