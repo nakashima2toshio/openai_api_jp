@@ -1,5 +1,35 @@
 Memo
 
+README.md を最新版に、かつ以下の資料を統合した資料にアップデートしたい。
+  OpenAI APIの習得を主眼とし、
+  全体構成、記述内容まで、全体的に見直し、作成せよ。
+
+  （1）以下のREADME資料の構成、リンク、1行概要を持つ。
+  　README_setup.md
+
+・プログラムの構成
+
+[OpenAI APIのみの速習版]
+a0_simple_api.ipynb
+
+[OpenAI API]
+a00_responses_api.py
+a01_structured_outputs_parse_schema.py
+a02_responses_tools_pydantic_parse.py
+a03_images_and_vision.py
+a04_audio_speeches.py
+a05_conversation_state.py
+a06_reasoning_chain_of_thought.py
+
+[utilities]
+a10_get_vsid.py
+get_cities_list.py
+
+[ccommon]
+helper_api.py
+helper_st.py
+
+------------------------
 最高性能モデル
 
 Claude Opus 4.1 (claude-opus-4-1-20250805)
