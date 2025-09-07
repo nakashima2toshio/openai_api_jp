@@ -1,9 +1,8 @@
 # 🚀 OpenAI API From Scratch with Streamlit
 - If you prefer English, please use translation tools like Google Translate to read the English version.
-
-<div align="center">
 ## OpenAI APIを基礎から応用まで体系的に学習するための包括的チュートリアル
 
+<div>
 [![Python](https://img.shields.io/badge/Python-3.11%2B-blue)](https://www.python.org/)
 [![OpenAI](https://img.shields.io/badge/OpenAI-API%20v1-green)](https://openai.com/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.44%2B-red)](https://streamlit.io/)
