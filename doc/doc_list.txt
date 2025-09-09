@@ -12,6 +12,8 @@ README.md を最新版に、かつ以下の資料を統合した資料にアッ�
 [OpenAI APIのみの速習版]
 a0_simple_api.ipynb
 
+
+
 [OpenAI API]
 a00_responses_api.py
 a01_structured_outputs_parse_schema.py
