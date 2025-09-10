@@ -1,5 +1,4 @@
 # 🚀 OpenAI API From Scratch with Streamlit
-
 - If you prefer English, please use translation tools like Google Translate to read the English version.
 
 ## OpenAI APIを基礎から応用まで体系的に学習するための包括的チュートリアル

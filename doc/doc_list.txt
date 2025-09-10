@@ -1,5 +1,8 @@
 Memo
 ーーーーーーーーーーーーーーーーーーーー
+github: https://github.com/nakashima2toshio/openai_api_jp/blob/master/README.md
+・OpenAI APIのサンプル-プログラム数（9個), -サブプログラム数（59個）
+
 
 
 ーーーーーーーーーーーーーーーーーーーー
