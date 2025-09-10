@@ -1,18 +1,13 @@
 # 🚀 OpenAI API From Scratch with Streamlit
+
 - If you prefer English, please use translation tools like Google Translate to read the English version.
+
 ## OpenAI APIを基礎から応用まで体系的に学習するための包括的チュートリアル
-
-<div>
-[![Python](https://img.shields.io/badge/Python-3.11%2B-blue)](https://www.python.org/)
-[![OpenAI](https://img.shields.io/badge/OpenAI-API%20v1-green)](https://openai.com/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.44%2B-red)](https://streamlit.io/)
-[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
-
-</div>
+##### 主要なOpenAI APIは網羅しています、
+- プログラム数（9個）
+- サブプログラム数（59個）
 
 ## 🔗 関連プロジェクト## 🔗 関連プロジェクト
-
-
 | プロジェクト                                                             | 説明                                         | ステータス |
 | ------------------------------------------------------------------------ | -------------------------------------------- | ---------- |
 | [openai_api_jp](https://github.com/nakashima2toshio/openai_api_jp)       | OpenAI API完全ガイド（本プロジェクト）       | ✅ 公開中  |
@@ -41,19 +36,20 @@
 
 ### 📋 プログラム一覧
 
-| 区分 | プログラム | 説明 |
-|---|---|---|
-| **OpenAI API** | `a00_responses_api.py` | メイン統合デモ - 全機能を網羅 |
-| **OpenAI API** | `a01_structured_outputs_parse_schema.py` | 構造化出力とスキーマ検証 |
-| **OpenAI API** | `a02_responses_tools_pydantic_parse.py` | Pydanticベースの関数呼び出し |
-| **OpenAI API** | `a03_images_and_vision.py` | 画像生成とビジョンAPI |
-| **OpenAI API** | `a04_audio_speeches.py` | 音声処理（TTS/STT/翻訳） |
-| **OpenAI API** | `a05_conversation_state.py` | 会話状態管理 |
-| **OpenAI API** | `a06_reasoning_chain_of_thought.py` | Chain-of-Thought推論パターン |
-| **ユーティリティ** | `a10_get_vsid.py` | Vector Store ID管理 |
-| **ユーティリティ** | `get_cities_list.py` | 都市リストデータ処理 |
-| **共通モジュール** | `helper_api.py` | API操作の中核機能 |
-| **共通モジュール** | `helper_st.py` | Streamlit UI共通コンポーネント |
+
+| 区分               | プログラム                               | 説明                           |
+| ------------------ | ---------------------------------------- | ------------------------------ |
+| **OpenAI API**     | `a00_responses_api.py`                   | メイン統合デモ - 全機能を網羅  |
+| **OpenAI API**     | `a01_structured_outputs_parse_schema.py` | 構造化出力とスキーマ検証       |
+| **OpenAI API**     | `a02_responses_tools_pydantic_parse.py`  | Pydanticベースの関数呼び出し   |
+| **OpenAI API**     | `a03_images_and_vision.py`               | 画像生成とビジョンAPI          |
+| **OpenAI API**     | `a04_audio_speeches.py`                  | 音声処理（TTS/STT/翻訳）       |
+| **OpenAI API**     | `a05_conversation_state.py`              | 会話状態管理                   |
+| **OpenAI API**     | `a06_reasoning_chain_of_thought.py`      | Chain-of-Thought推論パターン   |
+| **ユーティリティ** | `a10_get_vsid.py`                        | Vector Store ID管理            |
+| **ユーティリティ** | `get_cities_list.py`                     | 都市リストデータ処理           |
+| **共通モジュール** | `helper_api.py`                          | API操作の中核機能              |
+| **共通モジュール** | `helper_st.py`                           | Streamlit UI共通コンポーネント |
 
 ---
 
@@ -62,22 +58,25 @@
 ### 🎯 a00_responses_api.py - メイン統合デモ
 
 #### サブプログラム（クラス／デモ）一覧
-| クラス／関数 | 概要 |
-|---|---|
-| `BaseDemo` | デモ機能の基底クラス（統一化版） |
-| `TextResponseDemo` | 基本テキスト応答 |
-| `MemoryResponseDemo` | 会話履歴付き応答 |
-| `ImageResponseDemo` | 画像入力（URL・Base64対応） |
-| `StructuredOutputDemo` | 構造化出力（create・parse対応） |
-| `WeatherDemo` | OpenWeatherMap API 連携 |
-| `FileSearchVectorStoreDemo` | FileSearch 専用 |
-| `WebSearchToolsDemo` | WebSearch 専用 |
-| `DemoManager` | デモ統合管理・実行制御 |
+
+
+| クラス／関数                | 概要                             |
+| --------------------------- | -------------------------------- |
+| `BaseDemo`                  | デモ機能の基底クラス（統一化版） |
+| `TextResponseDemo`          | 基本テキスト応答                 |
+| `MemoryResponseDemo`        | 会話履歴付き応答                 |
+| `ImageResponseDemo`         | 画像入力（URL・Base64対応）      |
+| `StructuredOutputDemo`      | 構造化出力（create・parse対応）  |
+| `WeatherDemo`               | OpenWeatherMap API 連携          |
+| `FileSearchVectorStoreDemo` | FileSearch 専用                  |
+| `WebSearchToolsDemo`        | WebSearch 専用                   |
+| `DemoManager`               | デモ統合管理・実行制御           |
 
 <details>
 <summary><b>💻 コード例</b></summary>
 
 #### TextResponseDemo - 基本テキスト応答
+
 ```python
 messages = get_default_messages()
 messages.append(
@@ -95,6 +94,7 @@ ResponseProcessorUI.display_response(response)
 ```
 
 #### MemoryResponseDemo - 会話履歴付き応答
+
 ```python
 # 1回目: 初回質問
 messages = get_default_messages()
@@ -108,6 +108,7 @@ response_2 = self.call_api_unified(messages, temperature=temperature)
 ```
 
 #### ImageResponseDemo - 画像入力対応
+
 ```python
 messages = get_default_messages()
 messages.append(
@@ -127,6 +128,7 @@ response = self.call_api_unified(messages, temperature=temperature)
 ```
 
 #### FileSearchVectorStoreDemo - ファイル検索
+
 ```python
 # FileSearchツールパラメータの作成
 fs_tool = FileSearchToolParam(
@@ -147,21 +149,24 @@ response = self.call_api_unified(messages, tools=[fs_tool])
 ### 📝 a01_structured_outputs_parse_schema.py - 構造化出力
 
 #### サブプログラム（クラス／デモ）一覧
-| クラス／関数 | 概要 |
-|---|---|
-| `BaseDemo` | デモ機能の基底クラス（統一化版） |
-| `EventExtractionDemo` | イベント情報抽出デモ |
-| `MathReasoningDemo` | 数学的思考ステップデモ |
-| `UIGenerationDemo` | UI コンポーネント生成デモ |
-| `EntityExtractionDemo` | エンティティ抽出デモ |
-| `ConditionalSchemaDemo` | 条件分岐スキーマデモ |
-| `ModerationDemo` | モデレーション＆拒否処理デモ |
-| `DemoManager` | デモの管理クラス（統一化版） |
+
+
+| クラス／関数            | 概要                             |
+| ----------------------- | -------------------------------- |
+| `BaseDemo`              | デモ機能の基底クラス（統一化版） |
+| `EventExtractionDemo`   | イベント情報抽出デモ             |
+| `MathReasoningDemo`     | 数学的思考ステップデモ           |
+| `UIGenerationDemo`      | UI コンポーネント生成デモ        |
+| `EntityExtractionDemo`  | エンティティ抽出デモ             |
+| `ConditionalSchemaDemo` | 条件分岐スキーマデモ             |
+| `ModerationDemo`        | モデレーション＆拒否処理デモ     |
+| `DemoManager`           | デモの管理クラス（統一化版）     |
 
 <details>
 <summary><b>💻 コード例</b></summary>
 
 #### EventExtractionDemo - イベント情報抽出
+
 ```python
 # Pydanticモデル定義
 class EventInfo(BaseModel):
@@ -179,6 +184,7 @@ event_info = response.output_parsed
 ```
 
 #### MathReasoningDemo - 数学的思考ステップ
+
 ```python
 # Pydanticモデル定義
 class Step(BaseModel):
@@ -205,27 +211,30 @@ response = self.call_api_parse(
 ### 🛠️ a02_responses_tools_pydantic_parse.py - 関数呼び出し
 
 #### サブプログラム（クラス／デモ）一覧
-| クラス／関数 | 概要 |
-|---|---|
-| `BaseDemo` | デモ機能の基底クラス |
-| `BasicFunctionCallDemo` | 基本的な function call のデモ |
-| `MultipleToolsDemo` | 複数ツール登録・複数関数呼び出し |
-| `AdvancedMultipleToolsDemo` | 高度な複数ツール呼び出し |
-| `NestedStructureDemo` | 入れ子構造のデモ |
-| `EnumTypeDemo` | Enum 型のデモ |
-| `NaturalTextStructuredOutputDemo` | 自然文での構造化出力 |
-| `SimpleDataExtractionDemo` | シンプルなデータ抽出 |
-| `MultipleEntityExtractionDemo` | 複数エンティティ抽出 |
-| `ComplexQueryDemo` | 複雑なクエリパターン |
-| `DynamicEnumDemo` | 動的な列挙型 |
-| `ChainOfThoughtDemo` | 思考の連鎖デモ |
-| `ConversationHistoryDemo` | 会話履歴デモ |
-| `DemoManager` | デモ管理クラス |
+
+
+| クラス／関数                      | 概要                             |
+| --------------------------------- | -------------------------------- |
+| `BaseDemo`                        | デモ機能の基底クラス             |
+| `BasicFunctionCallDemo`           | 基本的な function call のデモ    |
+| `MultipleToolsDemo`               | 複数ツール登録・複数関数呼び出し |
+| `AdvancedMultipleToolsDemo`       | 高度な複数ツール呼び出し         |
+| `NestedStructureDemo`             | 入れ子構造のデモ                 |
+| `EnumTypeDemo`                    | Enum 型のデモ                    |
+| `NaturalTextStructuredOutputDemo` | 自然文での構造化出力             |
+| `SimpleDataExtractionDemo`        | シンプルなデータ抽出             |
+| `MultipleEntityExtractionDemo`    | 複数エンティティ抽出             |
+| `ComplexQueryDemo`                | 複雑なクエリパターン             |
+| `DynamicEnumDemo`                 | 動的な列挙型                     |
+| `ChainOfThoughtDemo`              | 思考の連鎖デモ                   |
+| `ConversationHistoryDemo`         | 会話履歴デモ                     |
+| `DemoManager`                     | デモ管理クラス                   |
 
 <details>
 <summary><b>💻 コード例</b></summary>
 
 #### BasicFunctionCallDemo - 基本的な Function Call
+
 ```python
 class WeatherRequest(BaseModel):
     city: str
@@ -246,6 +255,7 @@ response = self.client.responses.parse(
 ```
 
 #### SimpleDataExtractionDemo - シンプルなデータ抽出
+
 ```python
 class PersonInfo(BaseModel):
     name: str
@@ -268,18 +278,21 @@ response = self.client.responses.parse(
 ### 🎨 a03_images_and_vision.py - 画像処理
 
 #### サブプログラム（クラス／デモ）一覧
-| クラス／関数 | 概要 |
-|---|---|
-| `BaseDemo` | ベースデモクラス（統一化版） |
-| `URLImageToTextDemo` | URL 画像からテキスト生成 |
-| `Base64ImageToTextDemo` | Base64 画像からテキスト生成 |
-| `PromptToImageDemo` | プロンプトから画像生成 |
-| `DemoManager` | デモ管理クラス（統一化版） |
+
+
+| クラス／関数            | 概要                         |
+| ----------------------- | ---------------------------- |
+| `BaseDemo`              | ベースデモクラス（統一化版） |
+| `URLImageToTextDemo`    | URL 画像からテキスト生成     |
+| `Base64ImageToTextDemo` | Base64 画像からテキスト生成  |
+| `PromptToImageDemo`     | プロンプトから画像生成       |
+| `DemoManager`           | デモ管理クラス（統一化版）   |
 
 <details>
 <summary><b>💻 コード例</b></summary>
 
 #### URLImageToTextDemo - URL画像からテキスト生成
+
 ```python
 # 画像URLからテキスト生成の実装例
 from openai import OpenAI
@@ -300,6 +313,7 @@ response = client.responses.create(model=model, input=messages)
 ```
 
 #### PromptToImageDemo - プロンプトから画像生成
+
 ```python
 # DALL-E画像生成の実装例
 from openai import OpenAI
@@ -323,15 +337,17 @@ image_url = response.data[0].url
 ### 🎤 a04_audio_speeches.py - 音声処理
 
 #### サブプログラム（クラス／デモ）一覧
-| クラス／関数 | 概要 |
-|---|---|
-| `BaseDemo` | デモ機能の基底クラス（音声用統一化版） |
-| `TextToSpeechDemo` | Text to Speech API のデモ |
-| `SpeechToTextDemo` | Speech to Text API のデモ |
-| `SpeechTranslationDemo` | Speech Translation API のデモ |
-| `RealtimeApiDemo` | Realtime API のデモ |
-| `ChainedVoiceAgentDemo` | Chained Voice Agent のデモ |
-| `AudioDemoManager` | 音声デモの管理クラス（統一化版） |
+
+
+| クラス／関数            | 概要                                   |
+| ----------------------- | -------------------------------------- |
+| `BaseDemo`              | デモ機能の基底クラス（音声用統一化版） |
+| `TextToSpeechDemo`      | Text to Speech API のデモ              |
+| `SpeechToTextDemo`      | Speech to Text API のデモ              |
+| `SpeechTranslationDemo` | Speech Translation API のデモ          |
+| `RealtimeApiDemo`       | Realtime API のデモ                    |
+| `ChainedVoiceAgentDemo` | Chained Voice Agent のデモ             |
+| `AudioDemoManager`      | 音声デモの管理クラス（統一化版）       |
 
 > 注: a04_audio_speeches.py では `st.expander` 内に `st.code` ブロックが見つかりませんでした。このファイルは音声処理を中心に実装されています。
 
@@ -340,18 +356,21 @@ image_url = response.data[0].url
 ### 💬 a05_conversation_state.py - 会話状態管理
 
 #### サブプログラム（クラス／デモ）一覧
-| クラス／関数 | 概要 |
-|---|---|
-| `BaseDemo` | ベースデモクラス（統一化版） |
-| `StatefulConversationDemo` | ステートフルな会話継続デモ |
-| `WebSearchParseDemo` | Web 検索と構造化パース |
-| `FunctionCallingDemo` | Function Calling デモ |
-| `DemoManager` | デモ管理クラス（統一化版） |
+
+
+| クラス／関数               | 概要                         |
+| -------------------------- | ---------------------------- |
+| `BaseDemo`                 | ベースデモクラス（統一化版） |
+| `StatefulConversationDemo` | ステートフルな会話継続デモ   |
+| `WebSearchParseDemo`       | Web 検索と構造化パース       |
+| `FunctionCallingDemo`      | Function Calling デモ        |
+| `DemoManager`              | デモ管理クラス（統一化版）   |
 
 <details>
 <summary><b>💻 コード例</b></summary>
 
 #### StatefulConversationDemo - ステートフルな会話継続
+
 ```python
 # ステートフルな会話継続の実装例
 from openai import OpenAI
@@ -384,6 +403,7 @@ follow_up_response = client.responses.create(
 ```
 
 #### WebSearchParseDemo - Web検索と構造化パース
+
 ```python
 # Web検索と構造化パースの実装例
 from openai import OpenAI
@@ -421,20 +441,23 @@ structured_response = client.responses.parse(
 ### 🧠 a06_reasoning_chain_of_thought.py - 推論パターン
 
 #### サブプログラム（クラス／デモ）一覧
-| クラス／関数 | 概要 |
-|---|---|
-| `BaseDemo` | ベースデモクラス（統一化版） |
-| `StepByStepReasoningDemo` | 段階的推論（Step-by-Step） |
-| `HypothesisTestDemo` | 仮説検証推論 |
-| `TreeOfThoughtDemo` | 思考の木（Tree of Thought） |
-| `ProsConsDecisionDemo` | 賛否比較決定（Pros-Cons-Decision） |
-| `PlanExecuteReflectDemo` | 計画→実行→振り返り |
-| `DemoManager` | デモ管理クラス（統一化版） |
+
+
+| クラス／関数              | 概要                               |
+| ------------------------- | ---------------------------------- |
+| `BaseDemo`                | ベースデモクラス（統一化版）       |
+| `StepByStepReasoningDemo` | 段階的推論（Step-by-Step）         |
+| `HypothesisTestDemo`      | 仮説検証推論                       |
+| `TreeOfThoughtDemo`       | 思考の木（Tree of Thought）        |
+| `ProsConsDecisionDemo`    | 賛否比較決定（Pros-Cons-Decision） |
+| `PlanExecuteReflectDemo`  | 計画→実行→振り返り               |
+| `DemoManager`             | デモ管理クラス（統一化版）         |
 
 <details>
 <summary><b>💻 コード例</b></summary>
 
 #### StepByStepReasoningDemo - 段階的推論
+
 ```python
 # Step-by-Step 推論の実装例
 from openai import OpenAI
@@ -469,6 +492,7 @@ response = client.responses.create(model=model, input=messages)
 ```
 
 #### TreeOfThoughtDemo - 思考の木
+
 ```python
 # Tree of Thought 推論の実装例
 system_prompt = '''あなたはTree-of-Thoughts探索を実行するAIです。
