@@ -1,6 +1,6 @@
 # Makefile for OpenAI API JP Project Testing
 
-.PHONY: test test-cov test-unit test-integration test-a00 clean help
+.PHONY: test test-cov test-unit test-integration test-a00 test-a00-all test-a00-all-html clean help
 
 help:  ## ヘルプを表示
 	@echo "使用可能なコマンド:"
@@ -53,3 +53,11 @@ install-test-deps:  ## テスト用の追加依存パッケージをインスト
 
 # デフォルトターゲット
 all: test-cov
+
+# 追加: a00 の両テスト（通常版 + fixed版）をまとめて実行するターゲット
+test-a00-all:  ## a00 の両テストを実行（fixed含む）
+	pytest tests/unit/test_a00_responses_api.py tests/unit/test_a00_responses_api_fixed.py -v
+
+test-a00-all-html:  ## a00 の両テストをHTMLカバレッジ付きで実行
+	pytest tests/unit/test_a00_responses_api.py tests/unit/test_a00_responses_api_fixed.py --cov=a00_responses_api --cov-report=html --cov-report=term
+	@echo "カバレッジレポート: htmlcov/index.html"

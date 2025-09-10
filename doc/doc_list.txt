@@ -1,5 +1,46 @@
 Memo
 [テスト]
+  - a00（通常版）のみ: make test-a00
+  - a00（通常版）+ fixed 版まとめて: make test-a00-all
+  - a00 のHTMLカバレッジ: make test-a00-html / make test-a00-all-html
+
+ーーーーーーーーー
+セットアップ
+
+  - 仮想環境作成/有効化: python3 -m venv .venv && source .venv/bin/activate
+  - 依存インストール: pip install -r requirements.txt
+  - 追加テストツール（任意）: make install-test-deps
+
+  基本実行
+
+  - 全テスト: pytest -v または make test
+  - 単体/統合のみ: make test-unit / make test-integration
+  - 前回失敗のみ: make test-quick
+  - 並列実行（xdist必要）: make test-parallel
+
+  カバレッジ付き実行
+
+  - 全体カバレッジ + HTML: pytest --cov=. --cov-report=term --cov-report=html または make test-cov
+  - レポートを開く（macOS）: make coverage-report（ファイル: htmlcov/index.html）
+
+  a00 専用ターゲット
+
+  - a00（通常版）のみ: make test-a00
+  - a00（通常版）+ fixed 版まとめて: make test-a00-all
+  - a00 のHTMLカバレッジ: make test-a00-html / make test-a00-all-html
+
+  マーカー指定（必要に応じて）
+
+  - 例: 単体だけ: pytest -m unit -v
+  - 複数指定例: pytest -m "integration and not slow" -v
+
+  クリーンアップ
+
+  - テスト成果物削除: make clean
+
+  メモ
+
+  - HTMLレポートは htmlcov/index.html に出力。閾値は .coveragerc の fail_under = 15 を参照。
 
 
 ーーーーーーーーーーーーーーーーーーーーー
