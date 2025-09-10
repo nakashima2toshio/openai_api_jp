@@ -1,0 +1,49 @@
+[run]
+source = .
+omit = 
+    */tests/*
+    */.venv/*
+    */venv/*
+    */site-packages/*
+    */dist-packages/*
+    */conftest.py
+    */setup.py
+    */__pycache__/*
+    */migrations/*
+
+[report]
+# 最小カバレージ率の設定（段階的に向上させる）
+fail_under = 15
+
+# カバレージレポートから除外するもの
+exclude_lines =
+    # デバッグ用のコード
+    pragma: no cover
+    def __repr__
+    def __str__
+    
+    # 例外処理
+    raise AssertionError
+    raise NotImplementedError
+    except ImportError
+    
+    # 防御的プログラミング
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+    
+    # 抽象メソッド
+    @abstractmethod
+    @abc.abstractmethod
+    
+    # ログ関連
+    logger.debug
+    logger.info
+    logger.warning
+    logger.error
+    logger.critical
+
+[html]
+directory = htmlcov
+
+[xml]
+output = coverage.xml

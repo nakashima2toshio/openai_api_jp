@@ -1,5 +1,20 @@
 Memo
+[テスト]
 
+
+ーーーーーーーーーーーーーーーーーーーーー
+### doc/openai_api.md:
+- OpenAI APIの全機能（テキスト生成、構造化出力、FunctionCalling、画像・音声処理、会話管理、推論パターン）を網羅したサンプルプログラムと実装例のカタログ。
+
+### doc/anthropic_api.md:
+- Anthropic Claude APIの全機能（メッセージ生成、Tool使用、画像解析、会話状態管理、推論パターン）を網羅したサンプルプログラムと実装例のカタログ。
+
+### doc/openai_to_anthropic_migration_spec.md:
+- OpenAI APIからAnthropic ClaudeAPIへの移植に必要な技術仕様、
+  コード変換例、機能対応表、および移植時の注意事項を網羅した包括的な移行ガイド。
+
+
+ーーーーーーーーーーーーーーーー
 README.md を最新版に、かつ以下の資料を統合した資料にアップデートしたい。
   OpenAI APIの習得を主眼とし、
   全体構成、記述内容まで、全体的に見直し、作成せよ。
