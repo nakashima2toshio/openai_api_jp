@@ -1,0 +1,104 @@
+# OpenAI API デモ テスト用 Makefile
+
+.PHONY: help test test-all test-coverage test-html clean
+
+# デフォルトターゲット
+help:
+	@echo "OpenAI API デモ テストコマンド"
+	@echo "================================"
+	@echo "make test           - 全テストを実行"
+	@echo "make test-coverage  - カバレージ付きでテスト実行"
+	@echo "make test-html      - HTMLカバレージレポート生成"
+	@echo "make test-module MODULE=a00  - 特定モジュールのテスト"
+	@echo "make clean          - テストキャッシュをクリア"
+	@echo ""
+	@echo "対象モジュール:"
+	@echo "  a00_responses_api"
+	@echo "  a01_structured_outputs_parse_schema"
+	@echo "  a02_responses_tools_pydantic_parse"
+	@echo "  a03_images_and_vision"
+	@echo "  a04_audio_speeches"
+	@echo "  a05_conversation_state"
+	@echo "  a06_reasoning_chain_of_thought"
+
+# 全テスト実行
+test:
+	python -m pytest tests/unit/test_a0[0-6]*.py -v --tb=short
+
+# カバレージ付きテスト実行
+test-coverage:
+	python -m pytest tests/unit/test_a0[0-6]*.py \
+		--cov=a00_responses_api \
+		--cov=a01_structured_outputs_parse_schema \
+		--cov=a02_responses_tools_pydantic_parse \
+		--cov=a03_images_and_vision \
+		--cov=a04_audio_speeches \
+		--cov=a05_conversation_state \
+		--cov=a06_reasoning_chain_of_thought \
+		--cov-report=term-missing \
+		--cov-report=xml
+
+# HTMLカバレージレポート生成
+test-html:
+	python -m pytest tests/unit/test_a0[0-6]*.py \
+		--cov=a00_responses_api \
+		--cov=a01_structured_outputs_parse_schema \
+		--cov=a02_responses_tools_pydantic_parse \
+		--cov=a03_images_and_vision \
+		--cov=a04_audio_speeches \
+		--cov=a05_conversation_state \
+		--cov=a06_reasoning_chain_of_thought \
+		--cov-report=html
+	@echo "HTMLレポート生成完了: htmlcov/index.html"
+	@echo "ブラウザで開く: open htmlcov/index.html"
+
+# 特定モジュールのテスト
+test-module:
+	@if [ -z "$(MODULE)" ]; then \
+		echo "使用方法: make test-module MODULE=a00"; \
+		exit 1; \
+	fi
+	python -m pytest tests/unit/test_$(MODULE)*.py -v
+
+# テストキャッシュクリア
+clean:
+	rm -rf .pytest_cache
+	rm -rf htmlcov
+	rm -f .coverage
+	rm -f coverage.xml
+	find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+
+# 個別モジュールテスト
+test-a00:
+	python -m pytest tests/unit/test_a00*.py -v
+
+test-a01:
+	python -m pytest tests/unit/test_a01*.py -v
+
+test-a02:
+	python -m pytest tests/unit/test_a02*.py -v
+
+test-a03:
+	python -m pytest tests/unit/test_a03*.py -v
+
+test-a04:
+	python -m pytest tests/unit/test_a04*.py -v
+
+test-a05:
+	python -m pytest tests/unit/test_a05*.py -v
+
+test-a06:
+	python -m pytest tests/unit/test_a06*.py -v
+
+# 統計情報表示
+stats:
+	@echo "テスト統計情報"
+	@echo "=============="
+	@echo "a00: $$(python -m pytest tests/unit/test_a00*.py --co -q 2>/dev/null | wc -l) tests"
+	@echo "a01: $$(python -m pytest tests/unit/test_a01*.py --co -q 2>/dev/null | wc -l) tests"
+	@echo "a02: $$(python -m pytest tests/unit/test_a02*.py --co -q 2>/dev/null | wc -l) tests"
+	@echo "a03: $$(python -m pytest tests/unit/test_a03*.py --co -q 2>/dev/null | wc -l) tests"
+	@echo "a04: $$(python -m pytest tests/unit/test_a04*.py --co -q 2>/dev/null | wc -l) tests"
+	@echo "a05: $$(python -m pytest tests/unit/test_a05*.py --co -q 2>/dev/null | wc -l) tests"
+	@echo "a06: $$(python -m pytest tests/unit/test_a06*.py --co -q 2>/dev/null | wc -l) tests"
+	@echo "合計: $$(python -m pytest tests/unit/test_a0[0-6]*.py --co -q 2>/dev/null | wc -l) tests"

@@ -1,16 +1,22 @@
 # 🚀 OpenAI API From Scratch with Streamlit
+
 - If you prefer English, please use translation tools like Google Translate to read the English version.
 
 ## OpenAI APIを基礎から応用まで体系的に学習するための包括的チュートリアル
+
 ##### 主要なOpenAI APIは網羅しています、
+
 - プログラム数（9個）
 - サブプログラム数（59個）
+
 ## OpenAI API -> Anthropic API のマイグレーション：仕様書
+
 [OpenAPAPI->Anthropic API migration 仕様書]
 [Migration](doc/openai_to_anthropic_migration_spec.md)
 
-
 ## 🔗 関連プロジェクト## 🔗 関連プロジェクト
+
+
 | プロジェクト                                                             | 説明                                         | ステータス |
 | ------------------------------------------------------------------------ | -------------------------------------------- | ---------- |
 | [openai_api_jp](https://github.com/nakashima2toshio/openai_api_jp)       | OpenAI API完全ガイド（本プロジェクト）       | ✅ 公開中  |
@@ -602,19 +608,126 @@ streamlit run a03_images_and_vision.py --server.port=8503
 - **メモリ**: 16GB以上推奨
 - **IDE**: PyCharm Professional / VS Code with Python拡張
 
-### テスト実行
+### 🧪 テスト実行
+
+このプロジェクトには、7つの主要モジュールに対する包括的な単体テストが用意されています。
+
+#### クイックスタート
 
 ```bash
 # 全テスト実行
 pytest
 
-# カバレッジ付きテスト
-pytest --cov=. --cov-report=html
+# カバレッジ付きテスト（簡易版）
+pytest --cov=. --cov-report=term
 
-# 特定マーカーのテスト
-pytest -m unit        # 単体テストのみ
-pytest -m integration # 統合テストのみ
+# 6つの主要モジュールのテストとカバレッジ
+python -m pytest tests/unit/test_a0[0-6]*.py --cov --cov-report=term
 ```
+
+#### 詳細なテストガイド
+
+📖 **[テスト実行ガイド](tests/TEST_GUIDE.md)** - 包括的なテスト実行とカバレッジ測定の完全ガイド
+📖 **[個別モジュールテストガイド](tests/INDIVIDUAL_TEST_GUIDE.md)** - 各モジュール専用の詳細なテストガイド
+
+##### テスト構成
+
+
+| モジュール             | テストファイル                              | テスト数 | カバレッジ |
+| ---------------------- | ------------------------------------------- | -------- | ---------- |
+| a00_responses_api      | test_a00_responses_api.py                   | 33       | 34%        |
+| a01_structured_outputs | test_a01_structured_outputs_parse_schema.py | 27       | 56%        |
+| a02_responses_tools    | test_a02_responses_tools_pydantic_parse.py  | 23       | 45%        |
+| a03_images_and_vision  | test_a03_images_and_vision.py               | 19       | 60%        |
+| a04_audio_speeches     | test_a04_audio_speeches.py                  | 24       | 41%        |
+| a05_conversation_state | test_a05_conversation_state.py              | 21       | 51%        |
+| a06_reasoning_chain    | test_a06_reasoning_chain_of_thought.py      | 28       | 87%        |
+| **合計**               | -                                           | **175**  | **48%**    |
+
+##### 全テスト実行コマンド
+
+```bash
+# 🎯 全テスト実行（基本）
+pytest
+
+# 📊 全テストをカバレッジ付きで実行
+python -m pytest tests/unit/test_a0[0-6]*.py \
+  --cov=a00_responses_api \
+  --cov=a01_structured_outputs_parse_schema \
+  --cov=a02_responses_tools_pydantic_parse \
+  --cov=a03_images_and_vision \
+  --cov=a04_audio_speeches \
+  --cov=a05_conversation_state \
+  --cov=a06_reasoning_chain_of_thought \
+  --cov-report=term-missing
+
+# 📈 HTMLカバレッジレポート生成
+pytest tests/unit/test_a0[0-6]*.py --cov --cov-report=html
+open htmlcov/index.html
+```
+
+##### 個別モジュールテストコマンド
+
+```bash
+span
+```
+
+##### Makefileを使用した簡単実行
+
+```bash
+# テスト実行
+make -f Makefile.test test
+
+# カバレッジ付きテスト
+make -f Makefile.test test-coverage
+
+# HTMLカバレッジレポート生成
+make -f Makefile.test test-html
+open htmlcov/index.html
+
+# 個別モジュールテスト
+make -f Makefile.test test-a00  # a00_responses_api
+make -f Makefile.test test-a01  # a01_structured_outputs
+make -f Makefile.test test-a02  # a02_responses_tools
+make -f Makefile.test test-a03  # a03_images_and_vision
+make -f Makefile.test test-a04  # a04_audio_speeches
+make -f Makefile.test test-a05  # a05_conversation_state
+make -f Makefile.test test-a06  # a06_reasoning_chain_of_thought
+
+# テスト統計表示
+make -f Makefile.test stats
+```
+
+##### マーカーを使用したテスト
+
+```bash
+# 単体テストのみ
+pytest -m unit
+
+# 統合テストのみ
+pytest -m integration
+
+# APIテストのみ
+pytest -m api
+```
+
+##### 各モジュールのテスト説明
+
+
+| モジュール                 | 説明                         | 主要テスト内容                                       |
+| -------------------------- | ---------------------------- | ---------------------------------------------------- |
+| **a00_responses_api**      | 基本的なResponses API        | API呼び出し、UI表示、エラーハンドリング              |
+| **a01_structured_outputs** | 構造化出力とスキーマ検証     | Pydanticモデル、responses.parse()、推論モデル判定    |
+| **a02_responses_tools**    | Pydanticツールと関数呼び出し | Function Calling、pydantic_function_tool、ネスト構造 |
+| **a03_images_and_vision**  | 画像生成とVision API         | Base64エンコード、DALL-E生成、Vision API解析         |
+| **a04_audio_speeches**     | 音声合成と文字起こし         | TTS/STT API、音声ファイル処理、料金計算              |
+| **a05_conversation_state** | 会話状態管理                 | previous_response_id、Web検索ツール、セッション管理  |
+| **a06_reasoning_chain**    | Chain of Thought推論         | 5つの推論パターン、システムプロンプト、信頼度評価    |
+
+詳細なテスト実行方法、個別モジュールの詳細テスト、トラブルシューティングについては：
+
+- 📖 **[tests/TEST_GUIDE.md](tests/TEST_GUIDE.md)** - 包括的なテスト実行ガイド
+- 📖 **[tests/INDIVIDUAL_TEST_GUIDE.md](tests/INDIVIDUAL_TEST_GUIDE.md)** - 個別モジュール専用ガイド
 
 ### コード品質管理
 

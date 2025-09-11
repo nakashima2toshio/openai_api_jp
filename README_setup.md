@@ -78,6 +78,7 @@ git remote -v
 ```
 
 #### 📋 **プロジェクト概要**
+
 - **プロジェクト名**: OpenAI API - 基本・応用
 - **GitHubリポジトリ**: [openai_api_jp](https://github.com/nakashima2toshio/openai_api_jp)
 - **目的**: OpenAI APIの包括的な学習・デモアプリケーション
@@ -294,7 +295,7 @@ streamlit run a06_reasoning_chain_of_thought.py --server.port=8506
 
 アプリケーション起動後、ブラウザで以下URLにアクセス：
 
-- **統合デモ**: http://localhost:8501
+- **統合デモ**: http://localhost:8510
 - **構造化出力**: http://localhost:8501
 - **ツール連携**: http://localhost:8502
 - **画像・ビジョン**: http://localhost:8503
@@ -307,7 +308,7 @@ streamlit run a06_reasoning_chain_of_thought.py --server.port=8506
 ```bash
 # ターミナル分割で複数デモ同時起動
 # Terminal 1
-streamlit run a00_responses_api.py --server.port=8501
+streamlit run a00_responses_api.py --server.port=8510
 
 # Terminal 2  
 streamlit run a04_audio_speeches.py --server.port=8504
