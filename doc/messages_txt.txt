@@ -3,11 +3,9 @@ OpenAI APIを使用する際の、メッセージ処理に関わる主要なク�
 
 ■ はじめに
 OpenAI APIでメッセージを扱う際には、複数のクラスと関数が連携して動作します。本記事では、実際のプロジェクトで使用されているコードを基に、その構造と使い方を詳しく説明します。
-
 ================================================================================
-
-■ 主要なメッセージ型
-▼ EasyInputMessageParam - 基本のメッセージ型
+■ 1. 主要なメッセージ型
+▼ 1.1 EasyInputMessageParam - 基本のメッセージ型
 最も基本となるメッセージパラメータです。Responses APIで使用されます。
 
 from openai.types.responses import EasyInputMessageParam
@@ -24,144 +22,168 @@ roleには以下の4種類が指定できます：
 ・system: システムからの指示
 ・developer: 開発者による設定
 
-▼ マルチモーダル入力のためのパラメータ
-テキストと画像を組み合わせた入力も可能です。
+▼ 1.2 ResponseInputTextParam
+テキスト入力を表すパラメータです。マルチモーダル入力時に使用されます。
 
-# テキスト入力
 from openai.types.responses import ResponseInputTextParam
 text_param = ResponseInputTextParam(
     type="input_text",
     text="この画像について説明してください。"
 )
 
-# 画像入力（URL形式）
+▼ 1.3 ResponseInputImageParam
+画像入力を表すパラメータです。
+
+# URL形式の画像
 from openai.types.responses import ResponseInputImageParam
 image_param = ResponseInputImageParam(
     type="input_image",
     source={"type": "url", "data": image_url}
 )
 
-================================================================================
+# Base64形式の画像
+image_param = ResponseInputImageParam(
+    type="input_image",
+    source={"type": "base64", "data": base64_string}
+)
 
-■ メッセージ管理の仕組み
-▼ MessageManager クラス
-メッセージ履歴を効率的に管理するためのクラスです。
+▼ 1.4 Chat Completion用メッセージ型
+Chat Completions APIでは異なるメッセージ型を使用します：
+
+from openai.types.chat import (
+    ChatCompletionSystemMessageParam,
+    ChatCompletionUserMessageParam,
+    ChatCompletionAssistantMessageParam,
+    ChatCompletionMessageParam
+)
+================================================================================
+■ 2. メッセージ管理クラス
+▼ 2.1 MessageManager (helper_api.py)
+メッセージ履歴を管理するクラスです。
 
 from helper_api import MessageManager
 
-# 基本的な使い方
+# インスタンス化
 manager = MessageManager()
 
-# メッセージを追加
+# メッセージの追加
 manager.add_message("user", "質問内容")
 manager.add_message("assistant", "回答内容")
 
-# 履歴を取得
+# メッセージ履歴の取得
 messages = manager.get_messages()
 
-# 履歴をクリア
+# メッセージのクリア
 manager.clear_messages()
 
-このクラスの特徴：
-・メッセージ数の自動制限（デフォルト50件）
-・重要なdeveloperメッセージの保持
-・エクスポート・インポート機能
+# エクスポート/インポート
+exported_data = manager.export_messages()
+manager.import_messages(exported_data)
 
+【主な機能】
+・メッセージ履歴の自動管理
+・メッセージ数の制限（config.ymlのapi.message_limitで設定）
+・developerメッセージの保持
+・エクスポート/インポート機能
+
+▼ 2.2 MessageManagerUI (helper_st.py)
+Streamlit用のメッセージ管理UIクラスです。
+
+from helper_st import MessageManagerUI
+
+# デモごとにユニークなキーで初期化
+message_manager = MessageManagerUI(f"messages_{demo_key}")
+
+# メッセージの追加と表示
+message_manager.add_message("user", user_input)
+message_manager.add_message("assistant", response_text)
+
+# 会話履歴の表示
+message_manager.display_messages()
 ================================================================================
-
-■ デフォルトメッセージ関数
+■ 3. デフォルトメッセージ関数
 プロジェクト全体で統一されたメッセージ設定を使用するための関数群です。
-▼ get_default_messages()
+
+▼ 3.1 get_default_messages()
+config.ymlから設定されたデフォルトメッセージを取得します。
 
 from helper_api import get_default_messages
 
-# config.ymlから設定を読み込み
 messages = get_default_messages()
+# 返り値:
+# [
+#     EasyInputMessageParam(role="developer", content="You are a helpful assistant..."),
+#     EasyInputMessageParam(role="user", content="Please help me..."),
+#     EasyInputMessageParam(role="assistant", content="I'll help you...")
+# ]
 
-返されるメッセージ例：
-1. developer: "You are a helpful assistant..."
-2. user: "Please help me..."  
-3. assistant: "I'll help you..."
+▼ 3.2 append_user_message()
+デフォルトメッセージにユーザーメッセージを追加します。
 
-▼ メッセージ追加のヘルパー関数
+from helper_api import append_user_message
+messages = append_user_message("新しい質問内容")
 
-from helper_api import (
-    append_user_message,
-    append_developer_message,
-    append_assistant_message
-)
+▼ 3.3 append_developer_message() / append_assistant_message()
+同様に、developer/assistantメッセージを追加します。
 
-# ユーザーメッセージを追加
-messages = append_user_message("新しい質問")
-
-# 開発者メッセージを追加
-messages = append_developer_message("特別な指示")
-
+from helper_api import append_developer_message, append_assistant_message
+messages = append_developer_message("開発者向け指示")
+messages = append_assistant_message("アシスタントの応答")
 ================================================================================
+■ 4. call_api_unified メソッドの実装パターン
+▼ 4.1 基本的な実装 (a00_responses_api.py)
 
-■ call_api_unified メソッドの実装
-API呼び出しを統一的に行うメソッドの実装パターンです。
-▼ 基本実装
-
-def call_api_unified(self, messages, temperature=None, **kwargs):
+def call_api_unified(self, messages: List[EasyInputMessageParam], 
+                    temperature: Optional[float] = None, **kwargs):
     """統一されたAPI呼び出し"""
     model = self.get_model()
     
-    # パラメータ構築
+    # API呼び出しパラメータの構築
     api_params = {
         "model": model,
-        "input": messages,  # Responses APIでは"input"を使用
+        "input": messages,  # Responses APIでは "input" を使用
     }
     
+    # temperatureが指定されている場合は追加
     if temperature is not None:
         api_params["temperature"] = temperature
     
+    # その他のパラメータを追加
     api_params.update(kwargs)
     
-    # API呼び出し
+    # OpenAI APIを呼び出し
     response = self.client.responses.create(**api_params)
+    
     return response
 
-================================================================================
+▼ 4.2 構造化出力での使用 (a01_structured_outputs_parse_schema.py)
 
-■ 実践的な使用パターン
-▼ パターン1: 単一の質問応答
-
-# 1回だけの質問応答
+# JSON Schema形式での構造化出力
 messages = get_default_messages()
-messages.append(
-    EasyInputMessageParam(role="user", content=user_input)
-)
-response = call_api_unified(messages)
+messages.append(EasyInputMessageParam(role="user", content=user_input))
 
-▼ パターン2: 会話の継続
-
-# 会話履歴を保持しながら継続
-messages = get_default_messages()
-
-# 1回目
-messages.append(EasyInputMessageParam(role="user", content=input1))
-response1 = call_api_unified(messages)
-messages.append(
-    EasyInputMessageParam(role="assistant", content=response1_text)
+response = client.responses.create(
+    model=model,
+    input=messages,
+    text=ResponseTextConfigParam(
+        type="json_schema",
+        json_schema=ResponseFormatTextJSONSchemaConfigParam(
+            name="response_name",
+            schema=json_schema,
+            strict=True
+        )
+    )
 )
 
-# 2回目（履歴を含む）
-messages.append(EasyInputMessageParam(role="user", content=input2))
-response2 = call_api_unified(messages)
+▼ 4.3 マルチモーダル入力 (a03_images_and_vision.py)
 
-▼ パターン3: 画像を含む質問
-
-# テキストと画像を組み合わせる
+# テキストと画像を組み合わせた入力
 messages = get_default_messages()
 messages.append(
     EasyInputMessageParam(
         role="user",
         content=[
-            ResponseInputTextParam(
-                type="input_text", 
-                text="この画像は何ですか？"
-            ),
+            ResponseInputTextParam(type="input_text", text=question),
             ResponseInputImageParam(
                 type="input_image",
                 source={"type": "url", "data": image_url}
@@ -169,61 +191,102 @@ messages.append(
         ]
     )
 )
+
+response = call_api_unified(messages)
+================================================================================
+■ 5. 使用パターン別の実装例
+▼ 5.1 単一ターンの会話
+
+# 1回きりの質問応答
+messages = get_default_messages()
+messages.append(EasyInputMessageParam(role="user", content=user_input))
 response = call_api_unified(messages)
 
+▼ 5.2 マルチターンの会話
+
+# 会話履歴を保持
+messages = get_default_messages()
+
+# 1回目の会話
+messages.append(EasyInputMessageParam(role="user", content=input1))
+response1 = call_api_unified(messages)
+messages.append(EasyInputMessageParam(role="assistant", content=response1_text))
+
+# 2回目の会話（履歴を含む）
+messages.append(EasyInputMessageParam(role="user", content=input2))
+response2 = call_api_unified(messages)
+
+▼ 5.3 会話履歴の管理
+
+# MessageManagerを使用した履歴管理
+manager = MessageManager()
+
+# 新しいメッセージを追加
+manager.add_message("user", user_input)
+response = call_api_unified(manager.get_messages())
+manager.add_message("assistant", response_text)
+
+# 履歴のエクスポート
+conversation_data = manager.export_messages()
 ================================================================================
+■ 6. クラス間の関係
 
-■ システム全体の構成
-プロジェクトは以下の階層構造で組織されています：
-
-【1. OpenAI API型定義（最下層）】
-・EasyInputMessageParam
-・ResponseInputTextParam  
-・ResponseInputImageParam
-・ChatCompletionMessageParam
-
-【2. helper_api.py（中間層）】
-・MessageManager: 履歴管理
-・get_default_messages(): デフォルト設定
-・OpenAIClient: API通信
-
-【3. helper_st.py（UI層）】
-・MessageManagerUI: Streamlit用UI
-・ResponseProcessorUI: 結果表示
-
-【4. デモアプリケーション（最上層）】
-・a00_responses_api.py: 基本デモ
-・a01_structured_outputs: 構造化出力
-・a02_tools_pydantic: ツール使用
-・a03_images_vision: 画像処理
-・その他
-
+┌─────────────────────────────────────────────────────────┐
+│                    OpenAI API Types                      │
+├─────────────────────────────────────────────────────────┤
+│ ▪ EasyInputMessageParam (基本メッセージ型)               │
+│ ▪ ResponseInputTextParam (テキスト入力)                  │
+│ ▪ ResponseInputImageParam (画像入力)                     │
+│ ▪ ChatCompletionMessageParam (Chat API用)               │
+└─────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────┐
+│                      helper_api.py                       │
+├─────────────────────────────────────────────────────────┤
+│ ▪ MessageManager (メッセージ履歴管理)                    │
+│ ▪ get_default_messages() (デフォルトメッセージ取得)      │
+│ ▪ append_*_message() (メッセージ追加関数)               │
+│ ▪ OpenAIClient (API クライアント)                        │
+└─────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────┐
+│                      helper_st.py                        │
+├─────────────────────────────────────────────────────────┤
+│ ▪ MessageManagerUI (Streamlit用メッセージ管理UI)         │
+│ ▪ ResponseProcessorUI (レスポンス表示)                   │
+└─────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────┐
+│                    Demo Applications                     │
+├─────────────────────────────────────────────────────────┤
+│ ▪ a00_responses_api.py (基本デモ)                        │
+│ ▪ a01_structured_outputs_parse_schema.py (構造化出力)    │
+│ ▪ a02_responses_tools_pydantic_parse.py (ツール使用)     │
+│ ▪ a03_images_and_vision.py (画像処理)                    │
+│ ▪ a04_audio_speeches.py (音声処理)                       │
+│ ▪ a05_conversation_state.py (会話状態管理)               │
+│ ▪ a06_reasoning_chain_of_thought.py (推論)              │
+└─────────────────────────────────────────────────────────┘
 ================================================================================
+■ 7. 設定とカスタマイズ
+▼ 7.1 config.yml での設定
 
-■ 設定ファイル（config.yml）
-プロジェクト全体の設定を一元管理：
-
-# デフォルトメッセージの内容
+# デフォルトメッセージの設定
 default_messages:
-  developer: "You are a helpful assistant..."
-  user: "Please help me..."
-  assistant: "I'll help you..."
+  developer: "You are a helpful assistant specialized in software development."
+  user: "Please help me with my software development tasks."
+  assistant: "I'll help you with your software development needs."
 
-# API設定
+# メッセージ履歴の制限
 api:
-  message_limit: 50  # 履歴の最大保持数
-  timeout: 30
-  max_retries: 3
+  message_limit: 50  # 保持する最大メッセージ数
 
-================================================================================
-
-■ エラーハンドリングとデバッグ
-▼ デコレータを使った処理
+▼ 7.2 エラーハンドリング
 
 from helper_api import error_handler, timer
 
-@error_handler  # エラー処理
-@timer         # 実行時間計測
+@error_handler
+@timer
 def call_api_unified(self, messages, **kwargs):
     try:
         response = self.client.responses.create(
@@ -235,43 +298,34 @@ def call_api_unified(self, messages, **kwargs):
     except Exception as e:
         logger.error(f"API呼び出しエラー: {e}")
         raise
-
 ================================================================================
+■ 8. ベストプラクティス
 
-■ ベストプラクティス
+【1. メッセージ型の選択】
+・Responses API → EasyInputMessageParam を使用
+・Chat Completions API → ChatCompletionMessageParam系を使用
 
-【1. 適切なメッセージ型の選択】
-・Responses API → EasyInputMessageParam
-・Chat Completions API → ChatCompletionMessageParam
+【2. 履歴管理】
+・長い会話ではMessageManagerを使用して履歴を管理
+・必要に応じて履歴をエクスポート/インポート
 
-【2. 履歴管理の活用】
-・長い会話ではMessageManagerを使用
-・必要に応じてエクスポート・インポート
-
-【3. マルチモーダル入力の実装】
-・ResponseInputTextParamとResponseInputImageParamを組み合わせる
+【3. マルチモーダル入力】
+・テキストと画像を組み合わせる場合はResponseInputTextParamとResponseInputImageParamを使用
 
 【4. エラーハンドリング】
-・error_handlerデコレータで包括的に処理
-・ログを活用してデバッグ効率化
+・error_handlerデコレータを使用してエラーを適切に処理
+・ログを活用してデバッグ
 
-【5. パフォーマンスの最適化】
-・timerデコレータで処理時間を監視
-・TokenManagerでコストを管理
-
+【5. パフォーマンス】
+・timerデコレータで実行時間を計測
+・TokenManagerでトークン使用量を管理
 ================================================================================
-
 ■ まとめ
-OpenAI APIのメッセージ処理は、以下の要素で構成されています：
+OpenAI APIのメッセージ関連クラスは、以下の階層構造で組織されています：
 
-1. 型定義: OpenAI公式の型を使用
-2. 管理クラス: MessageManagerで履歴を効率的に管理
-3. ヘルパー関数: デフォルト設定の一元管理
-4. 統一メソッド: call_api_unifiedで一貫した呼び出し
+1. OpenAI API型定義: 基本的なメッセージ型とパラメータ
+2. helper_api.py: メッセージ管理とAPI呼び出しのロジック
+3. helper_st.py: Streamlit用のUI関連機能
+4. デモアプリケーション: 実際の使用例とパターン
 
-これらを組み合わせることで、保守性が高く、拡張可能なアプリケーションを構築できます。
-実際のプロジェクトでは、これらのクラスと関数を適切に組み合わせて、ユーザーのニーズに応じた機能を実装していきます。
-
-================================================================================
-
-※この記事で紹介したコードは、実際のプロジェクトで動作しているものを基にしています。OpenAI APIの仕様変更に応じて、適宜アップデートが必要になる場合があります。
+この構造により、柔軟で保守性の高いOpenAI APIアプリケーションの開発が可能になります。
